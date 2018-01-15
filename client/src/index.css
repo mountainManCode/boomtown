@@ -174,22 +174,46 @@ body {
 ***** HeaderBar *****
 */
 
-.header__toolbar {
+.headerToolbar {
     background: #fff !important;
     display: flex !important;
-    flex-flow: row wrap !important;
-    padding: 0 24px !important;
+    flex-flow: column wrap !important;
+    padding: 0px 24px !important;
+    vertical-align: baseline !important;
+    height: 120px !important;
 }
 
-.header__logo-image {
+.headerTitleWrapper {
+    display: flex !important;
+    flex-flow: row nowrap !important;
+    vertical-align: baseline !important;
+}
+
+.headerButtonWrapper {
+    width: 100%;
+    display: flex !important;
+    flex-flow: row nowrap !important;
+    margin-left: 1rem !important;
+    vertical-align: baseline !important;
+    align-items: center;
+    justify-content: flex-end !important;
+}
+
+.headerLogo {
     height: 36px !important;
-    margin-left: 24px !important;
+    margin: 0 24px !important;
 }
 
-.header__filter-item {
-    font-size: 16px !important;
-    margin-left: 32px !important;
-    line-height: 24px !important;
+.headerFilter {
+    margin: 0 0 1.5rem 2rem !important;
+}
+
+@media only screen and (min-width: 600px) {
+    .headerToolbar {
+        Height: 64px !important;
+        flex-flow: row nowrap !important;
+        justify-content: flex-end;
+    }
 }
 
 @media only screen and (min-width: 600px) {

@@ -1,10 +1,14 @@
-import React from "react";
-import IconMenu from "material-ui/IconMenu";
-import IconButton from "material-ui/IconButton";
-import FontIcon from "material-ui/FontIcon";
+import React, { Component } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Link,
+  Redirect
+} from "react-router-dom";
+
 import NavigationExpandMoreIcon from "material-ui/svg-icons/navigation/expand-more";
 import MenuItem from "material-ui/MenuItem";
-import DropDownMenu from "material-ui/DropDownMenu";
 import RaisedButton from "material-ui/RaisedButton";
 import SelectField from "material-ui/SelectField";
 import {
@@ -14,20 +18,12 @@ import {
   ToolbarTitle
 } from "material-ui/Toolbar";
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Link,
-  Redirect
-} from "react-router-dom";
-
-import Login from "../../containers/Login/Login";
-import Items from "../../containers/Items/Items";
-import ItemCard from "../ItemCard/ItemCard";
+// import Login from "../../containers/Login/Login";
+// import Items from "../../containers/Items/Items";
+// import ItemCard from "../ItemCard/ItemCard";
 import Logo from "../../images/boomtown-logo.svg";
 
-export default class ToolbarExamplesSimple extends React.Component {
+export default class HeaderBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,26 +35,27 @@ export default class ToolbarExamplesSimple extends React.Component {
 
   render() {
     return (
-      <Toolbar className="header__toolbar">
-        <ToolbarGroup firstChild={true}>
+      <Toolbar className="headerToolbar">
+        <ToolbarGroup firstChild={true} className="headerTitleWrapper">
           <Link to="/">
-            <img src={Logo} className="header__logo-image" />
+            <img src={Logo} className="headerLogo" alt="Boomtown logo" />
           </Link>
           <SelectField
-            className="header__filter-item"
-            floatingLabelText="Filter by tag"
+            className="headerFilter"
+            floatingLabelText="Filter by Tag"
             value={this.state.value}
             onChange={this.handleChange}
           >
             <MenuItem value={1} primaryText="Electronics" />
             <MenuItem value={2} primaryText="Household Items" />
-            <MenuItem value={3} primaryText="" />
-            <MenuItem value={4} primaryText="Musical Instruments" />
+            <MenuItem value={3} primaryText="Musical Instruments" />
             <MenuItem value={4} primaryText="Physical Media" />
             <MenuItem value={5} primaryText="Recreational Equipment" />
+            <MenuItem value={6} primaryText="Recreational Equipment" />
+            <MenuItem value={7} primaryText="Recreational Equipment" />
           </SelectField>
         </ToolbarGroup>
-        <ToolbarGroup>
+        <ToolbarGroup className="headerButtonWrapper">
           <Link to="/profile">
             <RaisedButton label="My Profile" primary={true} />
           </Link>

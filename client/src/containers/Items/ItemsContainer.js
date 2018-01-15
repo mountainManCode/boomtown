@@ -18,27 +18,6 @@ export default class ItemsContainer extends Component {
     const users = fetch(USERS_URL).then(r => r.json());
 
     Promise.all([items, users]).then(response => {
-      // this.state.items = response[0];
-      // this.state.items = response[1];
-
-      // let userHashTable = new Object();
-      // for (let index = 0; index < this.state.users.length; index++) {
-      //   // set user data in a hashmap
-      //   userHashTable[this.state.users[index].id] = {
-      //     id: this.state.users[index].id,
-      //     email: this.state.users[index].email,
-      //     fullname: this.state.users[index].fullname
-      //   };
-      // }
-
-      // const combined = this.state.items.map(item => {
-      //   let ownerKey = item.itemowner;
-      //   item.itemowner = userHashTable[ownerKey];
-      //   return item;
-      // });
-
-      // console.log(this.state.items);
-
       const [itemsList, usersList] = response;
 
       const combined = itemsList.map(item => {
