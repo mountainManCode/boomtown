@@ -18,22 +18,23 @@ import PropTypes from "prop-types";
 // import Items from "../../components/ItemCard/ItemCard";
 // import FlatButton from "material-ui/FlatButton";
 
-// avatar={<Gravatar email={item.itemowner.email} />}
-
 const ItemCard = ({ item }) => (
   <div className="itemsContainer">
     <Card>
       <CardHeader
         title={item.itemowner.fullname}
         subtitle={moment(item.created).fromNow()}
+        avatar={<Gravatar email={item.itemowner.email} />}
       />
-      {/* {item.borrower ? (   ...) */}
-      <CardMedia>
+      {/* {item.borrower} ? */}
+      {/* <CardMedia overlay={<CardTitle subtitle={item.borrower.fullname} />}>
         <img src={item.imageurl} alt={item.title} />
       </CardMedia>
-      {/* <Link> */}
+      : */}
+      <CardMedia>
+        <img src={item.imageurl} alt={item.title} />
+      </CardMedia>;
       <CardTitle title={item.title} subtitle={item.tags[0]} />
-      {/* </Link> */}
       <CardText>{item.description}</CardText>
       <CardActions>
         {item.borrower && <RaisedButton label="Borrow" secondary={true} />}

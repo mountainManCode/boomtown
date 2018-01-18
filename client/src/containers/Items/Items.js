@@ -17,7 +17,6 @@ const Items = ({ list }) => (
     </Masonry>
   </section>
 );
-
 Items.propTypes = {
   list: PropTypes.array.isRequired
 };
