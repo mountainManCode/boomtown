@@ -13,20 +13,24 @@ import Layout from "./components/Layout";
 import Login from "./containers/Login";
 import HeaderBar from "./components/HeaderBar/HeaderBar";
 import Items from "./containers/Items";
+import Profile from "./containers/Profile";
+import NotFound from "./containers/NotFound";
 
 const Boomtown = () => (
   <MuiThemeProvider muiTheme={muiTheme}>
     <Router>
-      <Layout>
-        <Switch>
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/" component={Items} />
-          {/*
-          <Route exact path="/profile/:userid" component={} />
-          <Route exact path="/share" component={} />
-          */}
-        </Switch>
-      </Layout>
+      <div>
+        <Route exact path="/login" component={Login} />
+        <Layout>
+          <Switch>
+            <Route exact path="/" component={Items} />
+            <Route exact path="/profile" component={Profile} />
+            {/* <Route exact path="/share" component={} /> */}
+
+            {/* <Route path="*" component={NotFound} /> */}
+          </Switch>
+        </Layout>
+      </div>
     </Router>
   </MuiThemeProvider>
 );

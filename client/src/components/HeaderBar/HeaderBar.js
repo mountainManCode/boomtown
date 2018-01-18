@@ -1,22 +1,10 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Link,
-  Redirect
-} from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
-import NavigationExpandMoreIcon from "material-ui/svg-icons/navigation/expand-more";
 import MenuItem from "material-ui/MenuItem";
 import RaisedButton from "material-ui/RaisedButton";
 import SelectField from "material-ui/SelectField";
-import {
-  Toolbar,
-  ToolbarGroup,
-  ToolbarSeparator,
-  ToolbarTitle
-} from "material-ui/Toolbar";
+import { Toolbar, ToolbarGroup, ToolbarSeparator } from "material-ui/Toolbar";
 
 // import Login from "../../containers/Login/Login";
 // import Items from "../../containers/Items/Items";
@@ -68,21 +56,3 @@ export default class HeaderBar extends Component {
     );
   }
 }
-
-// import React, { Component } from "react";
-
-// export default class HeaderBar extends Component {
-//   render() {
-//     return (
-//       <div>
-//         <button>
-//           <Link to="/">Home</Link>
-//         </button>
-//         {/* <button onClick={() => history.push('/')>My Profile</button> */}
-//         <button>
-//           <Link to="/login">Login</Link>
-//         </button>
-//       </div>
-//     );
-//   }
-// }

@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import {
   Card,
   CardActions,
@@ -7,6 +8,7 @@ import {
   CardTitle,
   CardText
 } from "material-ui/Card";
+import RaisedButton from "material-ui/RaisedButton";
 import Gravatar from "react-gravatar";
 import moment from "moment";
 
@@ -24,18 +26,16 @@ const ItemCard = ({ item }) => (
         subtitle={moment(item.created).fromNow()}
         avatar={<Gravatar email={item.itemowner.email} />}
       />
+      {/* {item.borrower ? (   ...) */}
       <CardMedia>
-        <img src={item.imageurl} alt="image" />
+        <img src={item.imageurl} alt={item.title} />
       </CardMedia>
+      {/* <Link> */}
       <CardTitle title={item.title} subtitle={item.tags[0]} />
+      {/* </Link> */}
       <CardText>{item.description}</CardText>
       <CardActions>
-        <button className="borrow-button" label="Borrow">
-          Borrow
-        </button>
-        <button className="borrow-button" label="rm -fr *">
-          rm -fr *
-        </button>
+        {item.borrower && <RaisedButton label="Borrow" secondary={true} />}
       </CardActions>
     </Card>
   </div>

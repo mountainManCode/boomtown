@@ -8,8 +8,7 @@ export default class ItemsContainer extends Component {
   constructor() {
     super();
     this.state = {
-      items: [],
-      users: []
+      items: []
     };
   }
   componentDidMount() {

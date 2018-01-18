@@ -84,14 +84,13 @@ time,
 mark,
 audio,
 video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
-
 
 /* HTML5 display-role reset for older browsers */
 
@@ -106,158 +105,158 @@ hgroup,
 menu,
 nav,
 section {
-    display: block;
+  display: block;
 }
 
 body {
-    line-height: 1;
+  line-height: 1;
 }
 
 ol,
 ul {
-    list-style: none;
+  list-style: none;
 }
 
 blockquote,
 q {
-    quotes: none;
+  quotes: none;
 }
 
 blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-    content: '';
-    content: none;
+  content: "";
+  content: none;
 }
 
 table {
-    border-collapse: collapse;
-    border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
-
 
 /*
     Extra Resetting
 */
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    background: linear-gradient(#6F86D6, #48C6EF);
-    background-attachment: fixed;
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Roboto', sans-serif;
-    height: 100vh;
-    line-height: 1.75;
-    /*overflow: auto;*/
-    width: 100vw;
+  background: linear-gradient(#6f86d6, #48c6ef);
+  background-attachment: fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  font-family: "Roboto", sans-serif;
+  height: 100vh;
+  line-height: 1.75;
+  /*overflow: auto;*/
+  width: 100vw;
 }
 
 #root {
-    height: 100%;
+  height: 100%;
 }
 
 .page {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
 }
-
 
 /*
 ***** HeaderBar *****
 */
 
 .headerToolbar {
-    background: #fff !important;
-    display: flex !important;
-    flex-flow: column wrap !important;
-    padding: 0px 24px !important;
-    vertical-align: baseline !important;
-    height: 120px !important;
+  background: #fff !important;
+  display: flex !important;
+  flex-flow: column nowrap !important;
+  padding: 0px 24px !important;
+  vertical-align: baseline !important;
+  height: 120px !important;
 }
 
 .headerTitleWrapper {
-    display: flex !important;
-    flex-flow: row nowrap !important;
-    vertical-align: baseline !important;
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  vertical-align: baseline !important;
+  flex-basis: 45%;
+  justify-content: flex-start !important;
 }
 
 .headerButtonWrapper {
-    width: 100%;
-    display: flex !important;
-    flex-flow: row nowrap !important;
-    margin-left: 1rem !important;
-    vertical-align: baseline !important;
-    align-items: center;
-    justify-content: flex-end !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  margin-left: 1rem !important;
+  vertical-align: baseline !important;
+  align-items: center;
+  justify-content: flex-end !important;
+  flex-basis: 45%;
 }
 
 .headerLogo {
-    height: 36px !important;
-    margin: 0 24px !important;
+  height: 36px !important;
+  margin: 0 24px !important;
 }
 
 .headerFilter {
-    margin: 0 0 1.5rem 2rem !important;
+  margin: 0 0 1.5rem 2rem !important;
 }
 
 @media only screen and (min-width: 600px) {
-    .headerToolbar {
-        Height: 64px !important;
-        flex-flow: row nowrap !important;
-        justify-content: flex-end;
-    }
+  .headerToolbar {
+    height: 64px !important;
+    flex-flow: row nowrap !important;
+    /* justify-content:; */
+  }
 }
 
 @media only screen and (min-width: 600px) {
-    .single-item-card {
-        width: 44%;
-        margin: 5px 2%;
-    }
+  .single-item-card {
+    width: 44%;
+    margin: 5px 2%;
+  }
 }
 
 @media only screen and (min-width: 900px) {
-    .single-item-card {
-        width: 30.33%;
-        margin: 5px 1.5%;
-    }
+  .single-item-card {
+    width: 30.33%;
+    margin: 5px 1.5%;
+  }
 }
-
 
 /*
 ***** Item Card List - Item Cards *****
 */
 
 .itemsContainer {
-    width: 100%;
+  width: 100%;
 }
 
 .single-item-card {
-    width: 98%;
-    margin: 5px 1%;
+  width: 98%;
+  margin: 5px 1%;
 }
 
 .react-gravatar {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 @media only screen and (min-width: 600px) {
-    .single-item-card {
-        width: 44%;
-        margin: 5px 2%;
-    }
+  .single-item-card {
+    width: 44%;
+    margin: 10px 2%;
+  }
 }
 
 @media only screen and (min-width: 900px) {
-    .single-item-card {
-        width: 30.33%;
-        margin: 5px 1.5%;
-    }
+  .single-item-card {
+    width: 30.33%;
+    margin: 10px 1.5%;
+  }
 }
