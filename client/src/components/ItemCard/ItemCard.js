@@ -18,13 +18,14 @@ import PropTypes from "prop-types";
 // import Items from "../../components/ItemCard/ItemCard";
 // import FlatButton from "material-ui/FlatButton";
 
+// avatar={<Gravatar email={item.itemowner.email} />}
+
 const ItemCard = ({ item }) => (
   <div className="itemsContainer">
     <Card>
       <CardHeader
         title={item.itemowner.fullname}
         subtitle={moment(item.created).fromNow()}
-        avatar={<Gravatar email={item.itemowner.email} />}
       />
       {/* {item.borrower ? (   ...) */}
       <CardMedia>
