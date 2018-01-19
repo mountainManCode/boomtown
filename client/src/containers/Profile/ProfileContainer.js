@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 import { fetchProfile } from "../../redux/modules/profile";
 import Profile from "./Profile";
-// import Items from "../Items/Items";
 // import Loader from "../../components/Loader";
 
 class ProfileContainer extends Component {
@@ -16,8 +15,7 @@ class ProfileContainer extends Component {
 
   render() {
     // if (this.props.isLoading) return <Loader />;
-    return <Profile profile={this.props.profile} />;
-    console.log(this.props.items);
+    return <Profile list={this.props.user} />;
   }
 }
 

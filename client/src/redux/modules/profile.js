@@ -56,6 +56,8 @@ export default (
   state = {
     isLoading: false,
     items: [],
+    profile: [],
+    user: [],
     error: ""
   },
   action
@@ -65,7 +67,7 @@ export default (
       return { ...state, isLoading: true, error: "" };
     }
     case GET_PROFILE: {
-      return { ...state, isLoading: false, user: action.payload, error: "" };
+      return { ...state, isLoading: false, items: action.payload, error: "" };
     }
 
     case GET_PROFILE_ERROR: {
