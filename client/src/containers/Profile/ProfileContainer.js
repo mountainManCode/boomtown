@@ -2,37 +2,29 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import { fetchItemsAndUsers } from "../../redux/modules/items";
+import { fetchProfile } from "../../redux/modules/profile";
 import Profile from "./Profile";
-import Items from "../Items/Items";
+// import Items from "../Items/Items";
 // import Loader from "../../components/Loader";
 
 class ProfileContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: [],
-      users: [],
-      userid: this.props.match.params.userid
-    };
-  }
+  static propTypes = {};
 
   componentDidMount() {
-    this.props.dispatch(fetchItemsAndUsers());
+    this.props.dispatch(fetchProfile(this.props.match.params.userid));
   }
 
   render() {
     // if (this.props.isLoading) return <Loader />;
-    return <Profile user={this.props.users} list={this.props.items} />;
-    console.log(this.props.users);
+    return <Profile profile={this.props.profile} />;
+    console.log(this.props.items);
   }
 }
 
 const mapStateToProps = state => ({
-  isLoading: state.items.isLoading,
-  items: state.items.items,
-  profile: state.items.users,
-  error: state.items.error
+  isLoading: state.profile.isLoading,
+  user: state.profile.items,
+  error: state.profile.error
 });
 
 export default connect(mapStateToProps)(ProfileContainer);

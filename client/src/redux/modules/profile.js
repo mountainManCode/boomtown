@@ -1,37 +1,36 @@
 //ACTIONS
 
-const GET_USER_LOADING = "GET_USER_LOADING";
-const GET_USER = "GET_USER";
-const GET_USER_ERROR = "GET_USER_ERROR";
+const GET_PROFILE_LOADING = "GET_PROFILE_LOADING";
 const GET_PROFILE = "GET_PROFILE";
+const GET_PROFILE_ERROR = "GET_PROFILE_ERROR";
 
 //ACTION CREATORS
-const getUserLoading = () => ({
-  type: GET_ITEMS_LOADING
+const getProfileLoading = () => ({
+  type: GET_PROFILE_LOADING
 });
 
-const getUser = user => ({
-  type: GET_USERS,
-  payload: user
+const getProfile = items => ({
+  type: GET_PROFILE,
+  payload: items
 });
 
-const getUserError = error => ({
-  type: GET_USER_ERROR,
+const getProfileError = error => ({
+  type: GET_PROFILE_ERROR,
   payload: error
 });
 
-const ITEMS_URL = "http://localhost:3001/items";
+// const ITEMS_URL = "http://localhost:3001/items/?itemowner=${userid}";
 const USERS_URL = "http://localhost:3001/users";
 
 // ASYNC ACTION CREATOR
-const items = fetch(ITEMS_URL).then(r => r.json());
-const users = fetch(USERS_URL).then(r => r.json());
+// const items = fetch(ITEMS_URL).then(r => r.json());
+// const users = fetch(USERS_URL).then(r => r.json());
 
-export const fetchItemsAndUsers = () => dispatch => {
-  dispatch(getItemsLoading());
+export const fetchProfile = userid => dispatch => {
+  dispatch(getProfileLoading());
 
   return Promise.all(
-    [ITEMS_URL, USERS_URL].map(url =>
+    [`http://localhost:3001/items/?itemowner=${userid}`, USERS_URL].map(url =>
       fetch(url).then(response => response.json())
     )
   )
@@ -47,28 +46,29 @@ export const fetchItemsAndUsers = () => dispatch => {
 
         return item;
       });
-      dispatch(getUser(combined));
+      dispatch(getProfile(combined));
     })
-    .catch(error => dispatch(getUserError(error)));
+    .catch(error => dispatch(getProfileError(error)));
 };
 // REDUCER
 
 export default (
   state = {
     isLoading: false,
-    user: [],
+    items: [],
     error: ""
   },
   action
 ) => {
   switch (action.type) {
-    case GET_USER_LOADING: {
+    case GET_PROFILE_LOADING: {
       return { ...state, isLoading: true, error: "" };
     }
-    case GET_USER: {
+    case GET_PROFILE: {
       return { ...state, isLoading: false, user: action.payload, error: "" };
     }
-    case GET_USER_ERROR: {
+
+    case GET_PROFILE_ERROR: {
       return { ...state, isLoading: false, error: action.payload };
     }
     default:
