@@ -21,19 +21,24 @@ import PropTypes from "prop-types";
 const ItemCard = ({ item }) => (
   <div className="itemsContainer">
     <Card>
-      <CardHeader
-        title={item.itemowner.fullname}
-        subtitle={moment(item.created).fromNow()}
-        avatar={<Gravatar email={item.itemowner.email} />}
-      />
-      {/* {item.borrower} ? */}
-      {/* <CardMedia overlay={<CardTitle subtitle={item.borrower.fullname} />}>
-        <img src={item.imageurl} alt={item.title} />
-      </CardMedia>
-      : */}
-      <CardMedia>
-        <img src={item.imageurl} alt={item.title} />
-      </CardMedia>;
+      {item.borrower ? (
+        <CardMedia
+          overlay={<CardTitle subtitle={`Lent to ${item.borrower.fullname}`} />}
+        >
+          <img src={item.imageurl} alt={item.title} />
+        </CardMedia>
+      ) : (
+        <CardMedia>
+          <img src={item.imageurl} alt={item.title} />
+        </CardMedia>
+      )};
+      <Link to="{this.props.match.params.itemowner.id}">
+        <CardHeader
+          title={item.itemowner.fullname}
+          subtitle={moment(item.created).fromNow()}
+          avatar={<Gravatar email={item.itemowner.email} />}
+        />
+      </Link>
       <CardTitle title={item.title} subtitle={item.tags[0]} />
       <CardText>{item.description}</CardText>
       <CardActions>

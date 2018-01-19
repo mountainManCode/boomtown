@@ -1,10 +1,10 @@
-//actions
+//ACTIONS
 
 const GET_ITEMS_LOADING = "GET_ITEMS_LOADING";
 const GET_ITEMS = "GET_ITEMS";
 const GET_ITEMS_ERROR = "GET_ITEMS_ERROR";
 
-//action creators
+//ACTION CREATORS
 const getItemsLoading = () => ({
   type: GET_ITEMS_LOADING
 });
@@ -22,21 +22,27 @@ const getItemsError = error => ({
 const ITEMS_URL = "http://localhost:3001/items";
 const USERS_URL = "http://localhost:3001/users";
 
-//async action creator
+// ASYNC ACTION CREATOR
 const items = fetch(ITEMS_URL).then(r => r.json());
 const users = fetch(USERS_URL).then(r => r.json());
 
 export const fetchItemsAndUsers = () => dispatch => {
   dispatch(getItemsLoading());
-  return Promise.all([items, users])
+
+  return Promise.all(
+    [ITEMS_URL, USERS_URL].map(url =>
+      fetch(url).then(response => response.json())
+    )
+  )
     .then(response => {
       const [itemsList, usersList] = response;
 
       const combined = itemsList.map(item => {
-        const { fullname, email } = usersList.find(
-          user => user.id === item.itemowner
-        );
-        item.itemowner = { fullname, email };
+        item.itemowner = usersList.find(user => user.id === item.itemowner);
+
+        item.borrower
+          ? (item.borrower = usersList.find(user => user.id === item.borrower))
+          : "error";
 
         return item;
       });
@@ -44,7 +50,7 @@ export const fetchItemsAndUsers = () => dispatch => {
     })
     .catch(error => dispatch(getItemsError(error)));
 };
-//reducer
+// REDUCER
 
 export default (
   state = {
