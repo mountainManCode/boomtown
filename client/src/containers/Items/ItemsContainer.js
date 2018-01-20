@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 import { fetchItemsAndUsers } from "../../redux/modules/items";
 import Items from "./Items";
+import HeaderBar from "../../components/HeaderBar/HeaderBar";
 // import Loader from "../../components/Loader";
 
 class ItemsContainer extends Component {
@@ -13,9 +14,16 @@ class ItemsContainer extends Component {
     this.props.dispatch(fetchItemsAndUsers());
   }
 
+  // filteredItems = (items, selectedTag) => {
+  //   const filterTag = _.filter(items, item => _.contains(selectedTag, item.id));
+  //   return selectedTag;
+  // };
+
   render() {
     // if (this.props.isLoading) return <Loader />;
-    return <Items list={this.props.items} />;
+    return (
+      <Items list={`filteredItems(this.props.items, this.props.filterTag`} />
+    );
     console.log(this.props.items);
   }
 }
@@ -23,6 +31,7 @@ class ItemsContainer extends Component {
 const mapStateToProps = state => ({
   isLoading: state.items.isLoading,
   items: state.items.items,
+  filteredItems: this.state.items.filterTag,
   error: state.items.error
 });
 

@@ -8,3 +8,12 @@ export default createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunk))
 );
+
+// dispatch action to update store to update filters
+// item filter this.props
+// Container
+// maps ListeningStateChangedEvent
+// Filter const
+// items tags
+
+// borrowed Profile:
