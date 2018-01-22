@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { BrowserRouter as Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { setFilterValue } from "../../redux/modules/filter";
 
 import MenuItem from "material-ui/MenuItem";
+// import Checkbox from "material-ui/Checkbox";
+
 import RaisedButton from "material-ui/RaisedButton";
 import SelectField from "material-ui/SelectField";
 import { Toolbar, ToolbarGroup, ToolbarSeparator } from "material-ui/Toolbar";
@@ -48,7 +50,11 @@ class HeaderBar extends Component {
               value={"Electronics"}
               primaryText="Electronics"
             />
-            <MenuItem value={"Household Items"} primaryText="Household Items" />
+            <MenuItem
+              checked={this.props.filterValue === "Household Items"}
+              value={"Household Items"}
+              primaryText="Household Items"
+            />
             <MenuItem
               value={"Musical Instruments"}
               primaryText="Musical Instruments"
@@ -59,7 +65,6 @@ class HeaderBar extends Component {
               primaryText="Recreational Equipment"
             />
             <MenuItem value={"Tools"} primaryText="Tools" />
-            <MenuItem value={7} primaryText="Recreational Equipment" />
           </SelectField>
           {/* </Route> */}
         </ToolbarGroup>
@@ -78,19 +83,9 @@ class HeaderBar extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     filterValue: state.filter.filterValue
   };
 };
 
 export default connect(mapStateToProps)(HeaderBar);
-
-{
-  /* handleChange={(event, index, values) => {
-              dispatch(getItemsFilters(values));
-            }} */
-}
-{
-  /* values={itemsFilters} */
-}

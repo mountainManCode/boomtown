@@ -10,7 +10,7 @@ const Items = ({ list }) => (
   <section className={"itemsContainer"}>
     <Masonry className={"itemsList"} elementType={"div"}>
       {list.map(item => (
-        <div className={"single-item-card"} key={item.id}>
+        <div className={"itemCard"} key={item.id}>
           <ItemCard item={item} key={item.id} />
         </div>
       ))}

@@ -19,7 +19,7 @@ import PropTypes from "prop-types";
 // import FlatButton from "material-ui/FlatButton";
 
 const ProfileCard = ({ item }) => (
-  <div className="itemsContainer">
+  <section className="ownerItems">
     <Card>
       {item.borrower ? (
         <CardMedia
@@ -45,7 +45,7 @@ const ProfileCard = ({ item }) => (
         {item.borrower && <RaisedButton label="Borrow" secondary={true} />}
       </CardActions>
     </Card>
-  </div>
+  </section>
 );
 
 ProfileCard.propTypes = {

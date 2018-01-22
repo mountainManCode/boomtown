@@ -23,8 +23,6 @@ const ITEMS_URL = "http://localhost:3001/items";
 const USERS_URL = "http://localhost:3001/users";
 
 // ASYNC ACTION CREATOR
-const items = fetch(ITEMS_URL).then(r => r.json());
-const users = fetch(USERS_URL).then(r => r.json());
 
 export const fetchItemsAndUsers = () => dispatch => {
   dispatch(getItemsLoading());

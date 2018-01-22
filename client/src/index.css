@@ -238,7 +238,7 @@ body {
   width: 100%;
 }
 
-.single-item-card {
+.itemCard {
   width: 98%;
   margin: 5px 1%;
 }
@@ -259,4 +259,47 @@ body {
     width: 30.33%;
     margin: 10px 1.5%;
   }
+}
+
+/*
+***** Profile Card List - Profile Cards *****
+*/
+.profileContainer {
+  width: 100% !important;
+}
+
+.profileBanner {
+  width: 98% !important;
+  margin: 10px 1% !important;
+  text-align: "center" !important;
+  display: flex !important;
+  flex-flow: row wrap !important;
+  justify-content: space-between !important;
+  padding: 2rem !important;
+  margin: 2rem auto !important;
+}
+.profileBanner h2 {
+  font-size: 2.5rem !important;
+  line-height: 1.25 !important;
+  margin-bottom: 1rem !important;
+}
+
+.profileTitle {
+  margin: 0 1.5rem !important;
+  max-width: 100% !important;
+  font-size: 5rem !important;
+  line-height: 1.25 !important;
+  margin-bottom: 1rem !important;
+}
+
+.profileCard {
+  min-width: 100% !important;
+  margin: 5px 0 !important;
+  border: none !important;
+}
+
+.profileImage {
+  border-radius: 50% !important;
+  max-height: 200px !important;
+  max-width: 200px !important;
 }
