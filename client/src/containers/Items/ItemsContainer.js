@@ -18,20 +18,30 @@ class ItemsContainer extends Component {
   //   const filterTag = _.filter(items, item => _.contains(selectedTag, item.id));
   //   return selectedTag;
   // };
+  // <Items list={`filteredItems(this.props.items, this.props.filterTag`} />
 
   render() {
     // if (this.props.isLoading) return <Loader />;
+    if (this.props.isLoading || this.props.items === undefined)
+      return <p> Loading </p>;
     return (
-      <Items list={`filteredItems(this.props.items, this.props.filterTag`} />
+      <Items
+        list={this.props.items.filter(item => {
+          if (this.props.filterValue === "") {
+            return true;
+          } else {
+            return item.tags.includes(this.props.filterValue);
+          }
+        })}
+      />
     );
-    console.log(this.props.items);
   }
 }
 
 const mapStateToProps = state => ({
   isLoading: state.items.isLoading,
   items: state.items.items,
-  filteredItems: this.state.items.filterTag,
+  filterValue: state.filter.filterValue,
   error: state.items.error
 });
 
