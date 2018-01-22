@@ -248,14 +248,14 @@ body {
 }
 
 @media only screen and (min-width: 600px) {
-  .single-item-card {
+  .itemCard {
     width: 44%;
     margin: 10px 2%;
   }
 }
 
 @media only screen and (min-width: 900px) {
-  .single-item-card {
+  .itemCard {
     width: 30.33%;
     margin: 10px 1.5%;
   }
