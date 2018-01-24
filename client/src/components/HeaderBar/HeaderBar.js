@@ -22,15 +22,16 @@ class HeaderBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: null
+      value: []
     };
   }
 
-  handleChange = (event, index, value) => {
-    this.props.dispatch(setFilterValue(value));
+  handleChange = (event, index, selected) => {
+    this.props.dispatch(setFilterValue(selected));
   };
 
   render() {
+    // console.log(this.props.filters);
     return (
       <Toolbar className="headerToolbar">
         <ToolbarGroup firstChild={true} className="headerTitleWrapper">
@@ -39,32 +40,27 @@ class HeaderBar extends Component {
           </Link>
           {/* <Route exact path> use this to hide and show Selector Field */}
           {/* <SelectField /> */}
+
           <SelectField
             className="headerFilter"
+            multiple
+            autoWidth={true}
             floatingLabelText="Filter by Tag"
-            value={this.props.filterValue}
             onChange={this.handleChange}
+            value={this.props.selectedFilters}
           >
-            <MenuItem
-              checked={this.props.filterValue === "Electronics"}
-              value={"Electronics"}
-              primaryText="Electronics"
-            />
-            <MenuItem
-              checked={this.props.filterValue === "Household Items"}
-              value={"Household Items"}
-              primaryText="Household Items"
-            />
-            <MenuItem
-              value={"Musical Instruments"}
-              primaryText="Musical Instruments"
-            />
-            <MenuItem value={"Physical Media"} primaryText="Physical Media" />
-            <MenuItem
-              value={"Recreational Equipment"}
-              primaryText="Recreational Equipment"
-            />
-            <MenuItem value={"Tools"} primaryText="Tools" />
+            {this.props.filters.map(tag => (
+              <MenuItem
+                insetChildren
+                key={tag.title}
+                checked={
+                  !!this.props.selectedFilters.find(f => f === tag.title)
+                }
+                value={tag.title}
+                primaryText={tag.title}
+                //.includes .some
+              />
+            ))}
           </SelectField>
           {/* </Route> */}
         </ToolbarGroup>
@@ -84,7 +80,8 @@ class HeaderBar extends Component {
 
 const mapStateToProps = state => {
   return {
-    filterValue: state.filter.filterValue
+    selectedFilters: state.filter.selectedFilters,
+    filters: state.filter.filters
   };
 };
 

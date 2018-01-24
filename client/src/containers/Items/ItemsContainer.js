@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
-import { fetchItemsAndUsers } from "../../redux/modules/items";
+import items, { fetchItemsAndUsers } from "../../redux/modules/items";
 import Items from "./Items";
 import HeaderBar from "../../components/HeaderBar/HeaderBar";
 // import Loader from "../../components/Loader";
@@ -22,15 +22,20 @@ class ItemsContainer extends Component {
 
   render() {
     // if (this.props.isLoading) return <Loader />;
+
     if (this.props.isLoading || this.props.items === undefined)
       return <p> Loading </p>;
     return (
       <Items
         list={this.props.items.filter(item => {
-          if (this.props.filterValue === "") {
+          if (!this.props.selectedFilters.length) {
             return true;
           } else {
-            return item.tags.includes(this.props.filterValue);
+            return item.tags.some(tag =>
+              this.props.selectedFilters.includes(tag)
+            );
+
+            /* return item.tags.includes(this.props.selectedFilters); */
           }
         })}
       />
@@ -41,7 +46,8 @@ class ItemsContainer extends Component {
 const mapStateToProps = state => ({
   isLoading: state.items.isLoading,
   items: state.items.items,
-  filterValue: state.filter.filterValue,
+  filters: state.filter.filters,
+  selectedFilters: state.filter.selectedFilters,
   error: state.items.error
 });
 
