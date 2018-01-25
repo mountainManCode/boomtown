@@ -1,76 +1,85 @@
-//ACTIONS
+// ACTIONS
 
-const GET_ITEMS_LOADING = "GET_ITEMS_LOADING";
-const GET_ITEMS = "GET_ITEMS";
-const GET_ITEMS_ERROR = "GET_ITEMS_ERROR";
+const GET_ITEMS_LOADING = 'GET_ITEMS_LOADING';
+const GET_ITEMS = 'GET_ITEMS';
+const GET_ITEMS_ERROR = 'GET_ITEMS_ERROR';
 
-//ACTION CREATORS
+// ACTION CREATORS
 const getItemsLoading = () => ({
-  type: GET_ITEMS_LOADING
+    type: GET_ITEMS_LOADING,
 });
 
 const getItems = items => ({
-  type: GET_ITEMS,
-  payload: items
+    type: GET_ITEMS,
+    payload: items,
 });
 
 const getItemsError = error => ({
-  type: GET_ITEMS_ERROR,
-  payload: error
+    type: GET_ITEMS_ERROR,
+    payload: error,
 });
 
-const ITEMS_URL = "http://localhost:3001/items";
-const USERS_URL = "http://localhost:3001/users";
+const ITEMS_URL = 'http://localhost:3001/items';
+const USERS_URL = 'http://localhost:3001/users';
 
 // ASYNC ACTION CREATOR
 
 export const fetchItemsAndUsers = () => dispatch => {
-  dispatch(getItemsLoading());
+    dispatch(getItemsLoading());
 
-  return Promise.all(
-    [ITEMS_URL, USERS_URL].map(url =>
-      fetch(url).then(response => response.json())
+    return Promise.all(
+        [ITEMS_URL, USERS_URL].map(url =>
+            fetch(url).then(response => response.json()),
+        ),
     )
-  )
-    .then(response => {
-      const [itemsList, usersList] = response;
+        .then(response => {
+            const [itemsList, usersList] = response;
 
-      const combined = itemsList.map(item => {
-        item.itemowner = usersList.find(user => user.id === item.itemowner);
+            const combined = itemsList.map(item => {
+                item.itemowner = usersList.find(
+                    user => user.id === item.itemowner,
+                );
 
-        item.borrower
-          ? (item.borrower = usersList.find(user => user.id === item.borrower))
-          : "error";
+                item.borrower
+                    ? (item.borrower = usersList.find(
+                        user => user.id === item.borrower,
+                    ))
+                    : 'error';
 
-        return item;
-      });
-      dispatch(getItems(combined));
-    })
-    .catch(error => dispatch(getItemsError(error)));
+                return item;
+            });
+            dispatch(getItems(combined));
+        })
+        .catch(error => dispatch(getItemsError(error)));
 };
 // REDUCER
 
 export default (
-  state = {
-    isLoading: false,
-    items: [],
-    error: ""
-  },
-  action
+    state = {
+        isLoading: false,
+        items: [],
+        error: '',
+    },
+    action,
 ) => {
-  switch (action.type) {
+    switch (action.type) {
     case GET_ITEMS_LOADING: {
-      return { ...state, isLoading: true, error: "" };
+        return { ...state, isLoading: true, error: '' };
     }
     case GET_ITEMS: {
-      return { ...state, isLoading: false, items: action.payload, error: "" };
+        return {
+            ...state,
+            isLoading: false,
+            items: action.payload,
+            error: '',
+        };
     }
     case GET_ITEMS_ERROR: {
-      return { ...state, isLoading: false, error: action.payload };
+        return { ...state, isLoading: false, error: action.payload };
     }
     default:
-      return state;
-  }
+        return state;
+    }
 };
 //
 //

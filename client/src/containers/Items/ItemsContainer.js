@@ -1,54 +1,52 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 // import PropTypes from "prop-types";
 
-import items, { fetchItemsAndUsers } from "../../redux/modules/items";
-import Items from "./Items";
-import HeaderBar from "../../components/HeaderBar/HeaderBar";
+import items, { fetchItemsAndUsers } from '../../redux/modules/items';
+import Items from './Items';
+import HeaderBar from '../../components/HeaderBar/HeaderBar';
 // import Loader from "../../components/Loader";
 
 class ItemsContainer extends Component {
-  static propTypes = {};
+    static propTypes = {};
 
-  componentDidMount() {
-    this.props.dispatch(fetchItemsAndUsers());
-  }
+    componentDidMount() {
+        this.props.dispatch(fetchItemsAndUsers());
+    }
 
-  // filteredItems = (items, selectedTag) => {
-  //   const filterTag = _.filter(items, item => _.contains(selectedTag, item.id));
-  //   return selectedTag;
-  // };
-  // <Items list={`filteredItems(this.props.items, this.props.filterTag`} />
+    // filteredItems = (items, selectedTag) => {
+    //   const filterTag = _.filter(items, item => _.contains(selectedTag, item.id));
+    //   return selectedTag;
+    // };
+    // <Items list={`filteredItems(this.props.items, this.props.filterTag`} />
 
-  render() {
-    // if (this.props.isLoading) return <Loader />;
+    render() {
+        // if (this.props.isLoading) return <Loader />;
 
-    if (this.props.isLoading || this.props.items === undefined)
-      return <p> Loading </p>;
-    return (
-      <Items
-        list={this.props.items.filter(item => {
-          if (!this.props.selectedFilters.length) {
-            return true;
-          } else {
-            return item.tags.some(tag =>
-              this.props.selectedFilters.includes(tag)
-            );
+        if (this.props.isLoading || this.props.items === undefined) { return <p> Loading </p>; }
+        return (
+            <Items
+                list={this.props.items.filter(item => {
+                    if (!this.props.selectedFilters.length) {
+                        return true;
+                    }
+                    return item.tags.some(tag =>
+                        this.props.selectedFilters.includes(tag),
+                    );
 
-            /* return item.tags.includes(this.props.selectedFilters); */
-          }
-        })}
-      />
-    );
-  }
+                    /* return item.tags.includes(this.props.selectedFilters); */
+                })}
+            />
+        );
+    }
 }
 
 const mapStateToProps = state => ({
-  isLoading: state.items.isLoading,
-  items: state.items.items,
-  filters: state.filter.filters,
-  selectedFilters: state.filter.selectedFilters,
-  error: state.items.error
+    isLoading: state.items.isLoading,
+    items: state.items.items,
+    filters: state.filter.filters,
+    selectedFilters: state.filter.selectedFilters,
+    error: state.items.error,
 });
 
 export default connect(mapStateToProps)(ItemsContainer);

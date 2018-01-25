@@ -1,3 +1,3 @@
-import SelectFilter from "./SelectFilter";
+import SelectFilter from './SelectFilter';
 
 export default SelectFilter;
