@@ -19,8 +19,8 @@ const getProfileError = error => ({
     payload: error,
 });
 
-// const ITEMS_URL = "http://localhost:3001/items/?itemowner=${userid}";
-const USERS_URL = 'http://localhost:3001/users';
+// const ITEMS_URL = "http://localhost:4000/items/?itemowner=${userid}";
+const USERS_URL = 'http://localhost:4000/users';
 
 // ASYNC ACTION CREATOR
 // const items = fetch(ITEMS_URL).then(r => r.json());
@@ -43,11 +43,11 @@ export const fetchProfile = userid => dispatch => {
                     user => user.id === item.itemowner,
                 );
 
-                item.borrower
-                    ? (item.borrower = usersList.find(
-                        user => user.id === item.borrower,
-                    ))
-                    : 'error';
+                // item.borrower
+                //     ? (item.borrower = usersList.find(
+                //         user => user.id === item.borrower,
+                //     ))
+                //     : 'error';
 
                 return item;
             });

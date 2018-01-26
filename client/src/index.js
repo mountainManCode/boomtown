@@ -2,15 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import injectTapEventPlugin from 'react-tap-event-plugin';
-import registerServiceWorker from './registerServiceWorker';
-
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from './redux/store';
 
+import registerServiceWorker from './registerServiceWorker';
+import store from './redux/store';
 import './index.css';
 import muiTheme from './config/theme';
-
 import Layout from './components/Layout';
 import Login from './containers/Login';
 import HeaderBar from './components/HeaderBar/HeaderBar';

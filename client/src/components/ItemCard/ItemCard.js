@@ -43,7 +43,10 @@ const ItemCard = ({ item }) => (
                     avatar={<Gravatar email={item.itemowner.email} />}
                 />
             </Link>
-            <CardTitle title={item.title} subtitle={item.tags[0]} />
+            <CardTitle
+                title={item.title}
+                subtitle={item.tags.map(tag => tag.title)}
+            />
             <CardText>{item.description}</CardText>
             <CardActions>
                 {item.borrower && <RaisedButton label="Borrow" secondary />}
@@ -53,7 +56,7 @@ const ItemCard = ({ item }) => (
 );
 
 ItemCard.propTypes = {
-    // item: PropTypes.Object.isRequired,
+    item: PropTypes.object.isRequired,
 };
 
 export default ItemCard;

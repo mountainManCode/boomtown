@@ -6,16 +6,16 @@ import { blueGrey900 } from 'material-ui/styles/colors';
 
 const styles = {
     fieldStyle: {
-        width: '100%'
+        width: '100%',
     },
     errorStyle: {
         color: blueGrey900,
         position: 'absolute',
-        bottom: '-0.42rem'
+        bottom: '-0.42rem',
     },
     underlineStyle: {
-        borderColor: blueGrey900
-    }
+        borderColor: blueGrey900,
+    },
 };
 
 const ValidatedTextField = ({ label }) => (
@@ -29,7 +29,7 @@ const ValidatedTextField = ({ label }) => (
 );
 
 ValidatedTextField.propTypes = {
-    label: PropTypes.string.isRequired
+    label: PropTypes.string.isRequired,
 };
 
 export default ValidatedTextField;

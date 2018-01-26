@@ -7,7 +7,6 @@ import './styles.css';
 const Layout = ({ children }) => (
     <div className="appContentWrapper">
         <div className="appHeader">
-            {/* Might want to put your header bar here... */}
             <HeaderBar />
         </div>
         <div className="appContent">{children}</div>

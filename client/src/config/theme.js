@@ -6,6 +6,6 @@ export default getMuiTheme({
         textColor: blueGrey900,
         alternateTextColor: white,
         primary1Color: '#48C6EF',
-        accent1Color: blueGrey900
-    }
+        accent1Color: blueGrey900,
+    },
 });

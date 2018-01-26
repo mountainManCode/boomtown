@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 import items, { fetchItemsAndUsers } from '../../redux/modules/items';
 import Items from './Items';
@@ -23,7 +23,9 @@ class ItemsContainer extends Component {
     render() {
         // if (this.props.isLoading) return <Loader />;
 
-        if (this.props.isLoading || this.props.items === undefined) { return <p> Loading </p>; }
+        if (this.props.isLoading || this.props.items === undefined) {
+            return <p> Loading </p>;
+        }
         return (
             <Items
                 list={this.props.items.filter(item => {
@@ -31,7 +33,7 @@ class ItemsContainer extends Component {
                         return true;
                     }
                     return item.tags.some(tag =>
-                        this.props.selectedFilters.includes(tag),
+                        this.props.selectedFilters.includes(tag.title),
                     );
 
                     /* return item.tags.includes(this.props.selectedFilters); */
