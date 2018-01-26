@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import ItemCard from '../../components/ItemCard/ItemCard';
 
 // import Styles from "./styles.js";
-
 const Items = ({ list }) => (
     <section className={'itemsContainer'}>
         <Masonry className={'itemsList'} elementType={'div'}>

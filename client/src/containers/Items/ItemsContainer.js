@@ -1,58 +1,68 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
+// import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import items, { fetchItemsAndUsers } from '../../redux/modules/items';
+// import items, { fetchItemsAndUsers } from '../../redux/modules/items';
 import Items from './Items';
 import HeaderBar from '../../components/HeaderBar/HeaderBar';
 // import Loader from "../../components/Loader";
 
 class ItemsContainer extends Component {
-    static propTypes = {};
-
-    componentDidMount() {
-        this.props.dispatch(fetchItemsAndUsers());
-    }
-
-    // filteredItems = (items, selectedTag) => {
-    //   const filterTag = _.filter(items, item => _.contains(selectedTag, item.id));
-    //   return selectedTag;
-    // };
-    // <Items list={`filteredItems(this.props.items, this.props.filterTag`} />
+    PropTypes = {
+        loading: PropTypes.bool,
+        items: PropTypes.array,
+        data: PropTypes.array,
+    };
 
     render() {
-        // if (this.props.isLoading) return <Loader />;
-
-        if (this.props.isLoading || this.props.items === undefined) {
-            return <p> Loading </p>;
-        }
-        return (
-            <Items
-                list={this.props.items.filter(item => {
-                    if (!this.props.selectedFilters.length) {
-                        return true;
-                    }
-                    return item.tags.some(tag =>
-                        this.props.selectedFilters.includes(tag.title),
-                    );
-
-                    /* return item.tags.includes(this.props.selectedFilters); */
-                })}
-            />
-        );
+        const { loading, items } = this.props.data;
+        return loading ? <p>loading ...</p> : <Items list={items} />;
     }
 }
 
-const mapStateToProps = state => ({
-    isLoading: state.items.isLoading,
-    items: state.items.items,
-    filters: state.filter.filters,
-    selectedFilters: state.filter.selectedFilters,
-    error: state.items.error,
-});
+const fetchItems = gql`
+    query {
+        items {
+            title
+            id: id
+            itemowner {
+                id
+                fullname
+                email
+            }
+            borrower {
+                id
+            }
+            imageurl
+            description
+            available
+            created
+            tags {
+                id
+                title
+            }
+        }
+    }
+`;
 
-export default connect(mapStateToProps)(ItemsContainer);
+// return (
+//     <Items
+//         list={this.props.items.filter(item => {
+//             if (!this.props.selectedFilters.length) {
+//                 return true;
+//             }
+//             return item.tags.some(tag =>
+//                 this.props.selectedFilters.includes(tag.title),
+//             );
 
+//             /* return item.tags.includes(this.props.selectedFilters); */
+//         })}
+//     />
+
+export default graphql(fetchItems)(ItemsContainer);
+// (mapStateToProps)
 // componentDidMount() {
 //   //TODO: fetch JSON and attach state!
 //   const items = fetch(ITEMS_URL).then(r => r.json());

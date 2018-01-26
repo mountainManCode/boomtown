@@ -19,6 +19,7 @@ type Tag {
   type Item {
     id: ID
     title: String
+    created: String
     itemowner: User
     borrower: User
     imageurl: String
