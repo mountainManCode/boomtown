@@ -16,16 +16,27 @@ module.exports = async app => {
       return new Promise((resolve, reject) => {
         client.query("SELECT * FROM items", (err, res) => {
           resolve(res.rows);
-          client.end();
         });
       });
     },
 
     getItem(id) {
-      return;
+      return new Promise((resolve, reject) => {
+        client.query("SELECT * FROM items WHERE id = $1", [id], (err, res) => {
+          resolve(res.rows);
+        });
+      });
     },
     getTags() {
-      return;
+      return new Promise((resolve, reject) => {
+        client.query(
+          "SELECT * FROM tags WHERE id = $1",
+          [itemid],
+          (err, res) => {
+            resolve(res.rows);
+          }
+        );
+      });
     },
     createItem(id) {
       return;

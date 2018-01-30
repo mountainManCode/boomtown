@@ -1,5 +1,6 @@
 module.exports = ({
-  jsonResource: { getItem, getUser, getUsers, shareditems }
+  jsonResource: { getUser, getUsers, shareditems },
+  postgresResource: { getItem }
 }) => {
   return {
     Query: {
