@@ -1,46 +1,19 @@
-const fetch = require("node-fetch");
-
-module.exports = app => {
-  // const jsonServer = require("./jsonServer");
-  const ITEMS_URL = `http://localhost:${app.get("JSON_PORT")}/items`;
-  const USERS_URL = `http://localhost:${app.get("JSON_PORT")}/users`;
-
+module.exports = ({
+  jsonResource: { getItem, getItems, getUser, getUsers, shareditems }
+}) => {
   return {
     Query: {
       items() {
-        return fetch(ITEMS_URL).then(r => r.json());
+        return getItems();
       },
       users() {
-        return fetch(USERS_URL).then(r => r.json());
+        return getUsers();
       },
       user(root, { id }) {
-        return fetch(`${USERS_URL}/${id}`).then(r => r.json());
+        return getUser(id);
       },
       item(root, { id }) {
-        return fetch(`${ITEMS_URL}/${id}`).then(r => r.json());
-      }
-    },
-    Item: {
-      itemowner(item) {
-        return fetch(`${USERS_URL}/${item.itemowner}`).then(r => r.json());
-      },
-      borrower(item) {
-        if (item.borrower) {
-          return fetch(`${USERS_URL}/${item.borrower}`).then(r => r.json());
-        } else {
-          return null;
-        }
-      },
-      async tags(item) {
-        const theItem = await fetch(`${ITEMS_URL}/${item.id}`).then(r =>
-          r.json()
-        );
-        return theItem.tags;
-      }
-    },
-    User: {
-      shareditems(user) {
-        return fetch(`${ITEMS_URL}/?itemowner=${user.id}`).then(r => r.json());
+        return getitem(id);
       }
     },
     Mutation: {
@@ -58,6 +31,29 @@ module.exports = app => {
       // borrowerOfItem(root, { id, borrower: { fullname, email } }) {
       //   return { fullname, email };
       // }
+    },
+    Item: {
+      itemowner(item) {
+        return getUser(item.itemowner);
+      },
+      borrower(item) {
+        if (item.borrower) {
+          return getUser(item.borrower);
+        } else {
+          return null;
+        }
+      },
+      async tags(item) {
+        const theItem = await getItem(item.id);
+        return theItem.tags;
+      }
+    },
+    User: {
+      shareditems(user) {
+        return getSharedItems(user.id);
+      }
     }
   };
 };
+
+// retrun context.loaders.
