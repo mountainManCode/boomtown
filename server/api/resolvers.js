@@ -13,7 +13,7 @@ module.exports = ({
         return getUser(id);
       },
       item(root, { id }) {
-        return getitem(id);
+        return getItem(id);
       }
     },
     Mutation: {

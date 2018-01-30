@@ -1,5 +1,4 @@
 const { Client } = require("pg");
-const { Client } = require("pg");
 
 module.exports = async app => {
   const client = new Client({
@@ -9,19 +8,29 @@ module.exports = async app => {
     password: app.get("PGPASSWORD"),
     port: app.get("PGPORT")
   });
-  await client.connect();
 
-  client.query("SELECT NOW()", (err, res) => {
-    console.log(err, res);
-    client.end();
-  });
+  await client.connect();
 
   return {
     getItems() {
-      return;
+      return new Promise((resolve, reject) => {
+        client.query("SELECT * FROM items", (err, res) => {
+          resolve(res.rows);
+          client.end();
+        });
+      });
     },
 
-    getItem() {
+    getItem(id) {
+      return;
+    },
+    getTags() {
+      return;
+    },
+    createItem(id) {
+      return;
+    },
+    updateItem(id) {
       return;
     }
   };
