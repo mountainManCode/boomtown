@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // import items, { fetchItemsAndUsers } from '../../redux/modules/items';
 import Items from './Items';
-import HeaderBar from '../../components/HeaderBar/HeaderBar';
+// import HeaderBar from '../../components/HeaderBar/HeaderBar';
 // import Loader from "../../components/Loader";
 
 class ItemsContainer extends Component {
@@ -34,6 +34,7 @@ const fetchItems = gql`
             }
             borrower {
                 id
+                fullname
             }
             imageurl
             description
@@ -46,6 +47,8 @@ const fetchItems = gql`
         }
     }
 `;
+
+export default compose(graphql(fetchItems))(ItemsContainer);
 
 // return (
 //     <Items
@@ -61,7 +64,6 @@ const fetchItems = gql`
 //         })}
 //     />
 
-export default graphql(fetchItems)(ItemsContainer);
 // (mapStateToProps)
 // componentDidMount() {
 //   //TODO: fetch JSON and attach state!

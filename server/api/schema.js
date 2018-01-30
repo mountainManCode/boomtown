@@ -28,13 +28,38 @@ type Tag {
     tags: [Tag]
   }
 
+  input TagInput {
+    id: ID
+    title: String
+  }
+
+  input AddItemInput {
+    imageurl: String
+    title: String
+    description: String
+    tags: [TagInput]
+  }
+
+  input UpdateItemInput {
+    imageurl: String
+    title: String
+    description: String
+    tags: [TagInput]
+  }
+
+
+  type Mutation {
+    addItem(newItem: AddItemInput): Item
+    updateItem(currentItem: UpdateItemInput): Item
+    
+  }
+
   type Query {
     items: [Item]
     item(id: ID): Item    
     users: [User]
     user(id: ID): User
   }
-
 `;
 module.exports = makeExecutableSchema({
   typeDefs,

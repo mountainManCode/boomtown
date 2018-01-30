@@ -1,8 +1,7 @@
 const fetch = require("node-fetch");
+// const jsonServer = require("./jsonServer");
 const ITEMS_URL = "http://localhost:4000/items";
 const USERS_URL = "http://localhost:4000/users";
-
-//
 
 const resolveFunctions = {
   Query: {
@@ -41,6 +40,22 @@ const resolveFunctions = {
     shareditems(user) {
       return fetch(`${ITEMS_URL}/?itemowner=${user.id}`).then(r => r.json());
     }
+  },
+  Mutation: {
+    updateItem(root, { currentItem: { title } }) {
+      return { title };
+    },
+
+    addItem(root, { newItem: { title } }) {
+      // save the new item to the database.
+      // Must return Item Type thanks to our mutation schema.
+
+      return { title };
+    }
+
+    // borrowerOfItem(root, { id, borrower: { fullname, email } }) {
+    //   return { fullname, email };
+    // }
   }
 };
 

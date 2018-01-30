@@ -45,7 +45,7 @@ const ItemCard = ({ item }) => (
             </Link>
             <CardTitle
                 title={item.title}
-                subtitle={item.tags.map(tag => tag.title)}
+                subtitle={item.tags.map(tag => tag.title).join(', ')}
             />
             <CardText>{item.description}</CardText>
             <CardActions>
