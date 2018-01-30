@@ -48,7 +48,18 @@ const fetchItems = gql`
     }
 `;
 
-export default compose(graphql(fetchItems))(ItemsContainer);
+const mapStateToProps = state => ({
+    isLoading: state.items.isLoading,
+    // items: state.items.items,
+    filterValue: state.filter.filterValue,
+    filters: state.filter.filters,
+    selectedFilters: state.filter.selectedFilters,
+    // error: state.items.error,
+});
+
+export default compose(graphql(fetchItems), connect(mapStateToProps))(
+    ItemsContainer,
+);
 
 // return (
 //     <Items

@@ -12,10 +12,10 @@ import './style.css';
 
 // avatar={<Gravatar email={item.itemowner.email} />}
 
-const Profile = ({ list, items }) => {
-    const itemsShared = list.length;
+const Profile = ({ list, items }) =>
+    // const itemsShared = list.title.length;
 
-    return (
+    (
         <section className={'profileContainer'}>
             <Card className="profileBanner">
                 <CardTitle
@@ -25,7 +25,7 @@ const Profile = ({ list, items }) => {
                 />
                 <CardTitle subtitle={list[0] && list[0].itemowner.bio} />
                 <div className={'profileInfo'}>
-                    {<h3>{itemsShared}</h3>}
+                    {/* {<h3>{itemsShared}</h3>} */}
                     <p>Items Shared</p>
                 </div>
                 <div className="profileImage">
@@ -43,8 +43,8 @@ const Profile = ({ list, items }) => {
                 ))}
             </Masonry>
         </section>
-    );
-};
+    )
+;
 
 Profile.propTypes = {
     // list: PropTypes.Array.isRequired,

@@ -27,55 +27,92 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps)(ProfileContainer);
 
-// import React, { Component } from "react";
-// import Profile from "./Profile";
+// import React, { Component } from 'react';
+// import { connect } from 'react-redux';
+// import { graphql, compose } from 'react-apollo';
+// import gql from 'graphql-tag';
+// import PropTypes from 'prop-types';
 
-// const ITEMS_URL = "http://localhost:4000/items";
-// const USERS_URL = "http://localhost:4000/users";
+// // import { fetchProfile } from '../../redux/modules/profile';
+// import Profile from './Profile';
+// // import Loader from "../../components/Loader";
 
-// export default class ProfileContainer extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       items: [],
-//       users: []
-//       // userid: this.props.match.params.userid
+// class ProfileContainer extends Component {
+//     PropTypes = {
+//         loading: PropTypes.bool,
+//         profile: PropTypes.array,
+//         data: PropTypes.array,
 //     };
-//   }
 
-//   componentDidMount() {
-//     //TODO: fetch JSON and attach state!
-//     const items = fetch(ITEMS_URL).then(r => r.json());
-//     const users = fetch(USERS_URL).then(r => r.json());
+//     render() {
+//         // if (this.props.isLoading) return <Loader />;
+//         const { loading, profile } = this.props.data;
+//         return loading ? <p>loading ...</p> : <Profile list={profile} />;
+//     }
+// }
 
-//     Promise.all([items, users]).then(response => {
-//       const [itemsList, usersList] = response;
-//       // console.log(itemsList);
-//       const combined = itemsList.map(item => {
-//         item.itemowner = usersList.find(user => user.id === item.itemowner);
-//         return item;
-//       });
+// const fetchUser = gql`
+//     query {
+//         user(id: $id) {
+//             title
+//             id: id
+//             itemowner {
+//                 id
+//                 fullname
+//                 email
+//             }
+//             borrower {
+//                 id
+//                 fullname
+//             }
+//             imageurl
+//             description
+//             available
+//             created
+//             tags {
+//                 id
+//                 title
+//             }
+//         }
+//     }
+// `;
 
-//       let items = combined.filter(item => {
-//         return item.itemowner.fullname === "Mandi Wise";
-//       });
+// export default graphql(fetchUser)(ProfileContainer);
 
-//       // console.log(items);
+// const mapStateToProps = state => ({
+//     isLoading: state.profile.isLoading,
+//     user: state.profile.items,
+//     error: state.profile.error,
+// });
 
-//       this.setState({ items: items });
-//     });
-//   }
+// query fetchUser($id:ID) {
+// 	user(id: $id) {
+//     id
+//     email
+//     fullname
+//     imageurl
 
-//   // console.log(response);
-//   // TODO: Merge the 2 lists together, into a single list.
-//   // Attach the new list to state, and pass that list into the items component.
-//   // the Items component should render the new list!
+//     shareditems {
+//       id
+//       title
+//       created
+//       itemowner {
+//         id
+//         email
+//         fullname
+//       }
+//       borrower {
+//         id
+//         fullname
+//       }
+//       imageurl
+//       description
+//       available
+//       tags {
+//         id
+//         title
+//       }
 
-//   render() {
-//     if (this.state.items === undefined) {
-//       return false;
-//     } else {
-//       return <Profile list={this.state.items} />;
 //     }
 //   }
 // }

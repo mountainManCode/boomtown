@@ -1,7 +1,4 @@
-const { makeExecutableSchema } = require("graphql-tools");
-const resolvers = require("./resolvers");
-
-const typeDefs = `
+module.exports = `
 
 type Tag {
     id: ID
@@ -47,11 +44,9 @@ type Tag {
     tags: [TagInput]
   }
 
-
   type Mutation {
     addItem(newItem: AddItemInput): Item
-    updateItem(currentItem: UpdateItemInput): Item
-    
+    updateItem(currentItem: UpdateItemInput): Item 
   }
 
   type Query {
@@ -61,7 +56,3 @@ type Tag {
     user(id: ID): User
   }
 `;
-module.exports = makeExecutableSchema({
-  typeDefs,
-  resolvers
-});
