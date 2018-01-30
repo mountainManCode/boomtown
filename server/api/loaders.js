@@ -1,13 +1,9 @@
-// const DataLoader = require('dataloader');
-// const { getUserOwnedItems } = require('./resolvers');
+const DataLoader = require("dataloader");
 
-// const loadersFunction = {
-//   return (
-//     UserOwnedItems: new DataLoader(ids => (
-//       Promise.all(ids.map(id => getUserOwnedItems(id)
-//     )))
-//     // other data loaders go here...
-//   ))
-// };
+// allows to only send the request once, and cache the data for future pull
 
-// module.exports = loadersFunctions;
+module.exports = ({ jsonResource: { getItems } }) => {
+  return {
+    getItems: new DataLoader(ids => Promise.all(ids.map(id => getItems(id))))
+  };
+};

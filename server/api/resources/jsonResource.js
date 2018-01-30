@@ -9,6 +9,7 @@ module.exports = app => {
       return fetch(`${ITEMS_URL}/?itemowner=${user.id}`).then(r => r.json());
     },
     getItems() {
+      console.log(getItems);
       return fetch(ITEMS_URL).then(r => r.json());
     },
     getUsers() {

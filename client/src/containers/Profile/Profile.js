@@ -12,39 +12,39 @@ import './style.css';
 
 // avatar={<Gravatar email={item.itemowner.email} />}
 
-const Profile = ({ list, items }) =>
+const Profile = ({ list, items }) => (
     // const itemsShared = list.title.length;
 
-    (
-        <section className={'profileContainer'}>
-            <Card className="profileBanner">
-                <CardTitle
-                    elementType={'h2'}
-                    className={'profileTitle'}
-                    title={list[0] && list[0].itemowner.fullname}
+    <section className={'profileContainer'}>
+        <Card className="profileBanner">
+            <CardTitle
+                elementType={'h2'}
+                className={'profileTitle'}
+                title={
+                    list.profile.itemowner && list.profile.itemowner.fullname
+                }
+            />
+            <CardTitle subtitle={list.itemowner && list.itemowner.bio} />
+            <div className={'profileInfo'}>
+                {/* {<h3>{itemsShared}</h3>} */}
+                <p>Items Shared</p>
+            </div>
+            <div className="profileImage">
+                <Gravatar
+                    className="profileImage2"
+                    email={list.profile.itemowner && list.itemowner.email}
                 />
-                <CardTitle subtitle={list[0] && list[0].itemowner.bio} />
-                <div className={'profileInfo'}>
-                    {/* {<h3>{itemsShared}</h3>} */}
-                    <p>Items Shared</p>
+            </div>
+        </Card>
+        <Masonry className={'itemsList'} elementType={'div'}>
+            {list.map(item => (
+                <div className={'itemCard'} key={item.id}>
+                    <ProfileCard item={item} key={item.id} />
                 </div>
-                <div className="profileImage">
-                    <Gravatar
-                        className="profileImage2"
-                        email={list[0] && list[0].itemowner.email}
-                    />
-                </div>
-            </Card>
-            <Masonry className={'itemsList'} elementType={'div'}>
-                {list.map(item => (
-                    <div className={'itemCard'} key={item.id}>
-                        <ProfileCard item={item} key={item.id} />
-                    </div>
-                ))}
-            </Masonry>
-        </section>
-    )
-;
+            ))}
+        </Masonry>
+    </section>
+);
 
 Profile.propTypes = {
     // list: PropTypes.Array.isRequired,

@@ -1,10 +1,10 @@
 module.exports = ({
-  jsonResource: { getItem, getItems, getUser, getUsers, shareditems }
+  jsonResource: { getItem, getUser, getUsers, shareditems }
 }) => {
   return {
     Query: {
-      items() {
-        return getItems();
+      items(root, args, context) {
+        return context.loaders.getItems.load(args);
       },
       users() {
         return getUsers();
