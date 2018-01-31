@@ -26,10 +26,10 @@ const Boomtown = () => (
                 {/* <ConnectedRouter history={history}> */}
                 <Router>
                     <div>
-                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/" component={Login} />
                         <Layout>
                             <Switch>
-                                <Route exact path="/" component={Items} />
+                                <Route exact path="/items" component={Items} />
                                 <Route
                                     exact
                                     path="/profile/:userid"

@@ -11,7 +11,13 @@ import logo from '../../images/boomtown-logo.svg';
 import bottomLeft from '../../images/home-bl.svg';
 import topRight from '../../images/home-tr.svg';
 
-const Login = ({ login }) => (
+const Login = ({
+    login,
+    handleUpdateEmail,
+    handleUpdatePassword,
+    emailInputValue,
+    passwordInputValue,
+}) => (
     <div className="page login">
         <div className="logo">
             <img src={logo} alt="Boomtown Logo" />
@@ -25,14 +31,33 @@ const Login = ({ login }) => (
         <div className="cardContainer">
             <Paper zDepth={5}>
                 <div className="formContainer">
-                    <form onSubmit={login} autoComplete="off">
+                    <form
+                        onSubmit={e => {
+                            e.preventDefault();
+                            login();
+                        }}
+                        autoComplete="off"
+                    >
                         <div>
-                            <ValidatedTextField label="Email" />
+                            <ValidatedTextField
+                                label="Email"
+                                value={emailInputValue}
+                                handleChange={handleUpdateEmail}
+                            />
                         </div>
                         <div>
-                            <ValidatedTextField label="Password" />
+                            <ValidatedTextField
+                                label="Password"
+                                value={passwordInputValue}
+                                handleChange={handleUpdatePassword}
+                            />
                         </div>
-                        <RaisedButton className="enterButton" primary fullWidth type="submit">
+                        <RaisedButton
+                            className="enterButton"
+                            primary
+                            fullWidth
+                            type="submit"
+                        >
                             Enter
                         </RaisedButton>
                     </form>
@@ -43,7 +68,7 @@ const Login = ({ login }) => (
 );
 
 Login.propTypes = {
-    login: PropTypes.func.isRequired
+    login: PropTypes.func.isRequired,
 };
 
 export default Login;
