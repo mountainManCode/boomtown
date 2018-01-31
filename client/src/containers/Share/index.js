@@ -1,3 +1,5 @@
-import Share from './share';
+import ShareContainer from './ShareContainer';
+import Share from './Share';
 
-export default Share;
+export { Share };
+export default ShareContainer;

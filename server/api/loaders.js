@@ -5,5 +5,6 @@ const DataLoader = require("dataloader");
 module.exports = ({ postgresResource: { getItems } }) => {
   return {
     getItems: new DataLoader(ids => Promise.all(ids.map(id => getItems(id))))
+    // getTags: new DataLoader(ids => Promise.all(ids.map(id => getTags(id))))
   };
 };

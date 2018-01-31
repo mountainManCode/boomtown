@@ -16,6 +16,7 @@ import Login from './containers/Login';
 // import HeaderBar from './components/HeaderBar/HeaderBar';
 import Items from './containers/Items';
 import Profile from './containers/Profile';
+import Share from './containers/Share';
 import NotFound from './containers/NotFound';
 
 const Boomtown = () => (
@@ -34,7 +35,7 @@ const Boomtown = () => (
                                     path="/profile/:userid"
                                     component={Profile}
                                 />
-                                {/* <Route exact path="/share" component={} /> */}
+                                <Route exact path="/share" component={Share} />
 
                                 <Route path="*" component={NotFound} />
                             </Switch>

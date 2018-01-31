@@ -44,8 +44,9 @@ module.exports = ({
           return null;
         }
       },
-      tags(item) {
+      tags(item, args, context) {
         return getTags(item.id);
+        // return context.loaders.getTags.load(item.id);
       }
     },
     User: {
