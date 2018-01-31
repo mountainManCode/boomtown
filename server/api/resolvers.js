@@ -1,6 +1,6 @@
 module.exports = ({
-  jsonResource: { getUser, getUsers, shareditems },
-  postgresResource: { getItem }
+  jsonResource: { getItem, getUser, getUsers, shareditems },
+  postgresResource: { getTags }
 }) => {
   return {
     Query: {
@@ -44,9 +44,8 @@ module.exports = ({
           return null;
         }
       },
-      async tags(item) {
-        const theItem = await getItem(item.id);
-        return theItem.tags;
+      tags(item) {
+        return getTags(item.id);
       }
     },
     User: {

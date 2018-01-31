@@ -27,7 +27,8 @@ function start(postgresResource) {
   const schema = makeExecutableSchema({
     typeDefs,
     resolvers: initResolvers({
-      jsonResource
+      jsonResource,
+      postgresResource
     })
   });
 

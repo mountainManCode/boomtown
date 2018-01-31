@@ -14,26 +14,29 @@ module.exports = async app => {
   return {
     getItems() {
       return new Promise((resolve, reject) => {
-        client.query("SELECT * FROM items", (err, res) => {
-          resolve(res.rows);
+        client.query("SELECT * FROM items", (err, data) => {
+          resolve(data.rows);
         });
       });
     },
 
     getItem(id) {
       return new Promise((resolve, reject) => {
-        client.query("SELECT * FROM items WHERE id = $1", [id], (err, res) => {
-          resolve(res.rows);
+        client.query("SELECT * FROM items WHERE id = $1", [id], (err, data) => {
+          resolve(data.rows);
         });
       });
     },
-    getTags() {
+    getTags(id) {
       return new Promise((resolve, reject) => {
         client.query(
-          "SELECT * FROM tags WHERE id = $1",
-          [itemid],
-          (err, res) => {
-            resolve(res.rows);
+          `SELECT * FROM tags 
+            INNER JOIN itemtags ON itemtags.tagid = tags.id
+             WHERE itemtags.itemid = $1 
+          `,
+          [id],
+          (err, data) => {
+            resolve(data.rows);
           }
         );
       });
@@ -46,3 +49,5 @@ module.exports = async app => {
     }
   };
 };
+
+// inner join itemtagson teemtags.itemid=
