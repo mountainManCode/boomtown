@@ -6,6 +6,14 @@ module.exports = app => {
   app.set("PGPORT", process.env.PGPORT || "5432");
   //Express Configs
   app.set("PORT", process.env.PORT || "3001");
-  //Temporary JSON DEV server
-  app.set("JSON_PORT", "4000");
+
+  //FIREBASE CONFIG
+  app.set("FIREBASE_CONFIG", {
+    apiKey: "AIzaSyBGChQYckyz46Ih-8nTpaMiP9qDyDDfxWw",
+    authDomain: "boomtown-mmc9.firebaseapp.com",
+    databaseURL: "https://boomtown-mmc9.firebaseio.com",
+    projectId: "boomtown-mmc9",
+    storageBucket: "boomtown-mmc9.appspot.com",
+    messagingSenderId: "350770359974"
+  });
 };

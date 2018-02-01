@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { firebaseAuth } from '../../config/firebase';
 import MenuItem from 'material-ui/MenuItem';
 // import Checkbox from "material-ui/Checkbox";
 
@@ -18,6 +19,16 @@ import Logo from '../../images/boomtown-logo.svg';
 // import Items from "../../containers/Items/Items";
 // import ItemCard from "../ItemCard/ItemCard";
 
+const logout = () => {
+    firebaseAuth
+        .signOut()
+        .then(() => {
+            // Sign-out successful.
+        })
+        .catch(error => {
+            // An error happened.
+        });
+};
 class HeaderBar extends Component {
     constructor(props) {
         super(props);
@@ -76,7 +87,11 @@ class HeaderBar extends Component {
                     </Link>
                     <ToolbarSeparator />
                     <Link to="/login">
-                        <RaisedButton label="Login" secondary />
+                        <RaisedButton
+                            logout={this.logout}
+                            label="Logout"
+                            secondary
+                        />
                     </Link>
                 </ToolbarGroup>
             </Toolbar>

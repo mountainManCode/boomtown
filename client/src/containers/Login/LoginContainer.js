@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Login from './Login';
@@ -32,9 +34,6 @@ class LoginContainer extends Component {
                     this.state.emailInputValue,
                     this.state.passwordInputValue,
                 )
-                .then(args => {
-                    this.props.history.push('/');
-                })
                 .catch(error => {
                     this.setState({ loginError: error });
                 });
@@ -42,7 +41,10 @@ class LoginContainer extends Component {
     };
 
     render() {
-        return (
+        const { from } = this.props.location.state || {
+            from: { pathname: '/' },
+        };
+        return !this.props.authenticated ? (
             <Login
                 login={this.login}
                 emailInputValue={this.state.emailInputValue}
@@ -51,15 +53,17 @@ class LoginContainer extends Component {
                 handleUpdatePassword={this.handleUpdatePassword}
                 loginError={this.state.loginError}
             />
+        ) : (
+            <Redirect to={from} />
         );
     }
 }
 
-// const mapStateToProps = state => ({
-//     authenticated: state.auth.authenticated,
-//     userLoading: state.userLoading,
-// });
+const mapStateToProps = state => ({
+    authenticated: state.auth.authenticated,
+    userLoading: state.auth.userLoading,
+});
 
-// export default connect()(LoginContainer);
+export default connect(mapStateToProps)(LoginContainer);
 
-export default LoginContainer;
+// export default LoginContainer;

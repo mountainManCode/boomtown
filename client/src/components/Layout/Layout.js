@@ -7,7 +7,7 @@ import './styles.css';
 
 const Layout = ({ children, userLoading, authenticated }) =>
     (userLoading ? (
-        <div>'Loading ...'</div>
+        <div>Loading ...</div>
     ) : (
         // loader of appp render in here
         <div className="appContentWrapper">
@@ -26,7 +26,7 @@ Layout.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    userLoading: state.userLoading,
+    userLoading: state.auth.userLoading,
     authenticated: state.auth.authenticated,
 });
 

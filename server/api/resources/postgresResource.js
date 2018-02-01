@@ -12,6 +12,17 @@ module.exports = async app => {
   await client.connect();
 
   return {
+    getSharedItems(userid) {
+      return new Promise((resolve, reject) => {
+        client.query(
+          "SELECT * FROM items WHERE itemowner = $1",
+          [userid],
+          (err, data) => {
+            resolve(data.rows);
+          }
+        );
+      });
+    },
     getItems() {
       return new Promise((resolve, reject) => {
         client.query("SELECT * FROM items", (err, data) => {

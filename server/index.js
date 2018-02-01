@@ -17,7 +17,6 @@ const app = express();
 config(app);
 // the config file is passed throught the app
 
-const jsonResource = require("./api/resources/jsonResource")(app);
 const postgresResource = require("./api/resources/postgresResource");
 const firebaseResource = require("./api/resources/firebaseResource")(app);
 
@@ -27,8 +26,8 @@ function start(postgresResource) {
   const schema = makeExecutableSchema({
     typeDefs,
     resolvers: initResolvers({
-      jsonResource,
-      postgresResource
+      postgresResource,
+      firebaseResource
     })
   });
 
@@ -40,7 +39,7 @@ function start(postgresResource) {
     bodyParser.json(),
     graphqlExpress({
       schema,
-      context: { loaders: initLoaders({ postgresResource }) }
+      context: { loaders: initLoaders({ postgresResource, firebaseResource }) }
     })
   );
   // A route for accessing the GraphiQL tool

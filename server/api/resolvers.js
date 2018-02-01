@@ -1,6 +1,6 @@
 module.exports = ({
-  jsonResource: { getItem, getUser, getUsers, shareditems },
-  postgresResource: { getTags }
+  postgresResource: { getTags, getItem, getItems, getShareditems },
+  firebaseResource: { getUser, getUsers }
 }) => {
   return {
     Query: {
@@ -10,11 +10,11 @@ module.exports = ({
       users() {
         return getUsers();
       },
-      user(root, { id }) {
-        return getUser(id);
+      user(root, { id }, context) {
+        return context.loaders.getUser.load(id);
       },
-      item(root, { id }) {
-        return getItem(id);
+      item(root, { id }, context) {
+        return context.loaders.getItem.load(id);
       }
     },
     Mutation: {
@@ -28,14 +28,10 @@ module.exports = ({
 
         return { title };
       }
-
-      // borrowerOfItem(root, { id, borrower: { fullname, email } }) {
-      //   return { fullname, email };
-      // }
     },
     Item: {
-      itemowner(item) {
-        return getUser(item.itemowner);
+      itemowner({ itemowner }, args, context) {
+        return context.loaders.getUser.load(itemowner);
       },
       borrower(item) {
         if (item.borrower) {
@@ -45,8 +41,7 @@ module.exports = ({
         }
       },
       tags(item, args, context) {
-        return getTags(item.id);
-        // return context.loaders.getTags.load(item.id);
+        return context.loaders.getTags.load(item.id);
       }
     },
     User: {
