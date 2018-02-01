@@ -13,7 +13,7 @@ class LoginContainer extends Component {
         this.state = {
             emailInputValue: '',
             passwordInputValue: '',
-            redirect: false,
+            loginError: { message: '' },
         };
     }
 
@@ -33,14 +33,10 @@ class LoginContainer extends Component {
                     this.state.passwordInputValue,
                 )
                 .then(args => {
-                    console.log('succes', args);
-                    this.props.history.push('/items');
+                    this.props.history.push('/');
                 })
                 .catch(error => {
-                    // Handle Errors here.
-                    console.log('Error', error);
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
+                    this.setState({ loginError: error });
                 });
         }
     };
@@ -53,9 +49,17 @@ class LoginContainer extends Component {
                 passwordInputValue={this.state.passwordInputValue}
                 handleUpdateEmail={this.handleUpdateEmail}
                 handleUpdatePassword={this.handleUpdatePassword}
+                loginError={this.state.loginError}
             />
         );
     }
 }
+
+// const mapStateToProps = state => ({
+//     authenticated: state.auth.authenticated,
+//     userLoading: state.userLoading,
+// });
+
+// export default connect()(LoginContainer);
 
 export default LoginContainer;

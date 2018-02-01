@@ -9,8 +9,12 @@ import { Provider } from 'react-redux';
 import registerServiceWorker from './registerServiceWorker';
 import store from './redux/store';
 import client from './config/apolloClient';
-import './index.css';
+import { updateAuthState, userLoading } from './redux/modules/auth';
+import { firebaseAuth } from './config/firebase';
+
 import muiTheme from './config/theme';
+
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import Layout from './components/Layout';
 import Login from './containers/Login';
 // import HeaderBar from './components/HeaderBar/HeaderBar';
@@ -19,6 +23,25 @@ import Profile from './containers/Profile';
 import Share from './containers/Share';
 import NotFound from './containers/NotFound';
 
+import './index.css';
+
+let gotProfile = false;
+store.subscribe(() => {
+    const values = store.getState();
+    if (values.authenticated !== 'LOADING_USER' && !gotProfile) {
+        gotProfile = true;
+        store.dispatch(userLoading(false));
+    }
+});
+
+firebaseAuth.onAuthStateChanged(user => {
+    if (user) {
+        store.dispatch(updateAuthState(user));
+    } else {
+        store.dispatch(updateAuthState(false));
+    }
+});
+
 const Boomtown = () => (
     <MuiThemeProvider muiTheme={muiTheme}>
         <ApolloProvider client={client}>
@@ -26,18 +49,26 @@ const Boomtown = () => (
                 {/* <ConnectedRouter history={history}> */}
                 <Router>
                     <div>
-                        <Route exact path="/" component={Login} />
                         <Layout>
                             <Switch>
-                                <Route exact path="/items" component={Items} />
-                                <Route
+                                <Route exact path="/login" component={Login} />
+                                <PrivateRoute
+                                    exact
+                                    path="/"
+                                    component={Items}
+                                />
+                                <PrivateRoute
                                     exact
                                     path="/profile/:userid"
                                     component={Profile}
                                 />
-                                <Route exact path="/share" component={Share} />
+                                <PrivateRoute
+                                    exact
+                                    path="/share"
+                                    component={Share}
+                                />
 
-                                <Route path="*" component={NotFound} />
+                                <PrivateRoute path="*" component={NotFound} />
                             </Switch>
                         </Layout>
                     </div>

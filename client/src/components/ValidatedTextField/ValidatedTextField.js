@@ -18,7 +18,7 @@ const styles = {
     },
 };
 
-const ValidatedTextField = ({ label, handleChange, value }) => (
+const ValidatedTextField = ({ label, handleChange, value, type }) => (
     <TextField
         style={styles.fieldStyle}
         hintText={label}
@@ -27,6 +27,7 @@ const ValidatedTextField = ({ label, handleChange, value }) => (
         underlineFocusStyle={styles.underlineStyle}
         onChange={handleChange}
         value={value}
+        type={type || 'text'}
     />
 );
 
