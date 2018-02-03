@@ -9,24 +9,19 @@ import PropTypes from 'prop-types';
 import ItemCard from '../../components/ItemCard/ItemCard';
 
 import './style.css';
-// avatar={<Gravatar email={list[0].item.itemowner.email} />
-
-// avatar={<Gravatar email={item.itemowner.email} />}
 
 const Profile = ({ items, user }) => (
-    // const itemsShared = list.title.length;
-
-    <section className={'profileContainer'}>
+    <section className={'profile-container'}>
         <Card style={{ maxWidth: '800px', margin: '0 auto' }}>
             <div className="profile-header">
                 <div className="user-info">
-                    <h1>{user.fullname}</h1>
+                    <h2>{user.fullname}</h2>
                     <p>{user.bio}</p>
                 </div>
 
                 <div className="user-stats">
                     <p>
-                        <span>{items.id}</span> Items shared
+                        <span>{items.length}</span> Items shared
                     </p>
                     <p>
                         <span>{user.numborrowed}</span> Items borrowed
@@ -50,7 +45,8 @@ const Profile = ({ items, user }) => (
 );
 
 Profile.propTypes = {
-    // list: PropTypes.Array.isRequired,
+    user: PropTypes.object.isRequired,
+    items: PropTypes.array.isRequired,
 };
 
 export default Profile;

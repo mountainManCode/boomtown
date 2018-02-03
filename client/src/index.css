@@ -264,7 +264,7 @@ body {
 /*
 ***** Profile Card List - Profile Cards *****
 */
-.profileContainer {
+/* .profileContainer {
   width: 100% !important;
 }
 
@@ -290,16 +290,4 @@ body {
   font-size: 5rem !important;
   line-height: 1.25 !important;
   margin-bottom: 1rem !important;
-}
-
-.profileCard {
-  min-width: 100% !important;
-  margin: 5px 0 !important;
-  border: none !important;
-}
-
-.profileImage {
-  border-radius: 50% !important;
-  max-height: 200px !important;
-  max-width: 200px !important;
-}
+} */

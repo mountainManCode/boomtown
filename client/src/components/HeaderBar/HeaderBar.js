@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { firebaseAuth } from '../../config/firebase';
-import MenuItem from 'material-ui/MenuItem';
-// import Checkbox from "material-ui/Checkbox";
-
-import RaisedButton from 'material-ui/RaisedButton';
-import SelectField from 'material-ui/SelectField';
-import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
-
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import MenuItem from 'material-ui/MenuItem';
+// import Checkbox from "material-ui/Checkbox";
+import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
+import RaisedButton from 'material-ui/RaisedButton';
+import SelectField from 'material-ui/SelectField';
+
+import { firebaseAuth } from '../../config/firebase';
 import { setFilterValue } from '../../redux/modules/filter';
 
 import Logo from '../../images/boomtown-logo.svg';
@@ -19,16 +18,6 @@ import Logo from '../../images/boomtown-logo.svg';
 // import Items from "../../containers/Items/Items";
 // import ItemCard from "../ItemCard/ItemCard";
 
-const logout = () => {
-    firebaseAuth
-        .signOut()
-        .then(() => {
-            // Sign-out successful.
-        })
-        .catch(error => {
-            // An error happened.
-        });
-};
 class HeaderBar extends Component {
     constructor(props) {
         super(props);
@@ -53,8 +42,6 @@ class HeaderBar extends Component {
                             alt="Boomtown logo"
                         />
                     </Link>
-                    {/* <Route exact path> use this to hide and show Selector Field */}
-                    {/* <SelectField /> */}
 
                     <SelectField
                         className="headerFilter"
@@ -86,10 +73,17 @@ class HeaderBar extends Component {
                         <RaisedButton label="My Profile" primary />
                     </Link>
                     <ToolbarSeparator />
-                    <Link to="/login">
+                    <Link to="/">
                         <RaisedButton
-                            logout={this.logout}
                             label="Logout"
+                            onClick={() => {
+                                firebaseAuth
+                                    .signOut()
+                                    .then(() => {
+                                        // Sign-out successful.
+                                    })
+                                    .catch(error => {});
+                            }}
                             secondary
                         />
                     </Link>

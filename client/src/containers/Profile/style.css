@@ -1,5 +1,51 @@
-.profileContainer {
+.profile-container {
   width: 100%;
+  padding: 1%;
+}
+
+.profile-header {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  justify-content: space-between;
+  padding: 2rem;
+  margin: 2rem auto;
+}
+
+.user-info {
+  flex: 0 1 100%;
+  margin: 0 1.5rem;
+  max-width: 100%;
+}
+
+.user-info h2 {
+  font-size: 2.5rem !important;
+  line-height: 1.25;
+  margin-bottom: 1rem;
+}
+
+.user-stats {
+  flex: 0 1 100%;
+  margin: 0 1.5rem;
+  max-width: 100%;
+}
+@media only screen and (min-width: 800px) {
+  .profile-header {
+    flex-wrap: nowrap;
+    font-size: 1rem;
+  }
+
+  .profile-header > div {
+    flex: 0 1 50%;
+    margin: 0 1.5rem;
+    max-width: 50%;
+  }
+
+  .user-stats .user-gravatar {
+    max-width: 100%;
+    max-height: none;
+  }
 }
 
 .itemsContainer {
