@@ -18,7 +18,11 @@ class ProfileContainer extends Component {
     render() {
         // if (this.props.isLoading) return <Loader />;
         const { loading, user } = this.props.data;
-        return loading ? <p>loading ...</p> : <Profile user={user} />;
+        return loading ? (
+            <p>loading ...</p>
+        ) : (
+            <Profile items={user.shareditems} user={user} />
+        );
     }
 }
 

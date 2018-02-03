@@ -5,7 +5,8 @@ import Gravatar from 'react-gravatar';
 import Masonry from 'react-masonry-component';
 
 import PropTypes from 'prop-types';
-import ProfileCard from '../../components/ProfileCard/ProfileCard';
+// import ProfileCard from '../../components/ProfileCard/ProfileCard';
+import ItemCard from '../../components/ItemCard/ItemCard';
 
 import './style.css';
 // avatar={<Gravatar email={list[0].item.itemowner.email} />
@@ -25,7 +26,7 @@ const Profile = ({ items, user }) => (
 
                 <div className="user-stats">
                     <p>
-                        <span>{user.shareditems.id}</span> Items shared
+                        <span>{items.id}</span> Items shared
                     </p>
                     <p>
                         <span>{user.numborrowed}</span> Items borrowed
@@ -39,9 +40,9 @@ const Profile = ({ items, user }) => (
             </div>
         </Card>
         <Masonry className={'itemsList'} elementType={'div'}>
-            {user.shareditems.map(item => (
+            {items.map(item => (
                 <div className={'itemCard'} key={item.id}>
-                    <ProfileCard item={item} key={item.id} />
+                    <ItemCard item={item} key={item.id} />
                 </div>
             ))}
         </Masonry>

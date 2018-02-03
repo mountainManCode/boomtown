@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Link, withRouter } from 'react-router-dom';
+import { BrowserRouter as Link } from 'react-router-dom';
 import {
     Card,
     CardActions,
@@ -56,4 +56,4 @@ ProfileCard.propTypes = {
     // item: PropTypes.Object.isRequired,
 };
 
-export default withRouter(ProfileCard);
+export default ProfileCard;
