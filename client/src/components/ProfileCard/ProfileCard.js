@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Link } from 'react-router-dom';
+import { BrowserRouter as Link, withRouter } from 'react-router-dom';
 import {
     Card,
     CardActions,
@@ -36,7 +36,7 @@ const ProfileCard = ({ item }) => (
                     <img src={item.imageurl} alt={item.title} />
                 </CardMedia>
             )};
-            <Link to={`profile/${item.itemowner.id}`}>
+            <Link to={`/profile/${item.itemowner.id}`}>
                 <CardHeader
                     title={item.itemowner.fullname}
                     subtitle={moment(item.created).fromNow()}
@@ -56,4 +56,4 @@ ProfileCard.propTypes = {
     // item: PropTypes.Object.isRequired,
 };
 
-export default ProfileCard;
+export default withRouter(ProfileCard);

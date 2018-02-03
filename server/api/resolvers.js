@@ -1,5 +1,5 @@
 module.exports = ({
-  postgresResource: { getTags, getItem, getItems, getShareditems },
+  postgresResource: { getTags, getItem, getItems, getShareditems, createItem },
   firebaseResource: { getUser, getUsers }
 }) => {
   return {
@@ -7,10 +7,11 @@ module.exports = ({
       items(root, args, context) {
         return context.loaders.getItems.load(args);
       },
-      users() {
-        return getUsers();
+      users(root, { args }, context) {
+        return context.loaders.getUsers.load(args);
       },
       user(root, { id }, context) {
+        // console.log(args);
         return context.loaders.getUser.load(id);
       },
       item(root, { id }, context) {
@@ -18,24 +19,27 @@ module.exports = ({
       }
     },
     Mutation: {
-      updateItem(root, { currentItem: { title } }) {
-        return { title };
+      createNewItem(root, { newItem }) {
+        return createItem(newItem);
       },
-
-      addItem(root, { newItem: { title } }) {
-        // save the new item to the database.
-        // Must return Item Type thanks to our mutation schema.
-
-        return { title };
+      updateItem(root, { newItem: { id, borrower: { fullname, email } } }) {
+        return { fullname, email };
       }
+
+      // addItem(root, { newItem: { title } }) {
+      //   // save the new item to the database.
+      //   // Must return Item Type thanks to our mutation schema.
+
+      //   return { title };
+      // }
     },
     Item: {
-      itemowner({ itemowner }, args, context) {
-        return context.loaders.getUser.load(itemowner);
+      itemowner(item) {
+        return getUser(item.itemowner);
       },
       borrower(item) {
         if (item.borrower) {
-          return getUser(item.borrower);
+          return getUsers(item.borrower);
         } else {
           return null;
         }
@@ -45,9 +49,13 @@ module.exports = ({
       }
     },
     User: {
-      shareditems(user) {
-        return getSharedItems(user.id);
+      shareditems(user, args, context) {
+        return context.loaders.getSharedItems.load(user.id);
       }
+      // async numborrowed({ id }, args, context) {
+      //   const i = await context.loaders.getNumItemsBorrowed.load(id);
+      //   return i.length;
+      // }
     }
   };
 };

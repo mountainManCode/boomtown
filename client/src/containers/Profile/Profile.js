@@ -12,32 +12,34 @@ import './style.css';
 
 // avatar={<Gravatar email={item.itemowner.email} />}
 
-const Profile = ({ list, items }) => (
+const Profile = ({ items, user }) => (
     // const itemsShared = list.title.length;
 
     <section className={'profileContainer'}>
-        <Card className="profileBanner">
-            <CardTitle
-                elementType={'h2'}
-                className={'profileTitle'}
-                title={
-                    list.profile.itemowner && list.profile.itemowner.fullname
-                }
-            />
-            <CardTitle subtitle={list.itemowner && list.itemowner.bio} />
-            <div className={'profileInfo'}>
-                {/* {<h3>{itemsShared}</h3>} */}
-                <p>Items Shared</p>
-            </div>
-            <div className="profileImage">
+        <Card style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <div className="profile-header">
+                <div className="user-info">
+                    <h1>{user.fullname}</h1>
+                    <p>{user.bio}</p>
+                </div>
+
+                <div className="user-stats">
+                    <p>
+                        <span>{user.shareditems.id}</span> Items shared
+                    </p>
+                    <p>
+                        <span>{user.numborrowed}</span> Items borrowed
+                    </p>
+                </div>
                 <Gravatar
-                    className="profileImage2"
-                    email={list.profile.itemowner && list.itemowner.email}
+                    email={user.email}
+                    className="user-gravatar"
+                    size={170}
                 />
             </div>
         </Card>
         <Masonry className={'itemsList'} elementType={'div'}>
-            {list.map(item => (
+            {user.shareditems.map(item => (
                 <div className={'itemCard'} key={item.id}>
                     <ProfileCard item={item} key={item.id} />
                 </div>

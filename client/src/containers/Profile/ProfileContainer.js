@@ -17,38 +17,47 @@ class ProfileContainer extends Component {
 
     render() {
         // if (this.props.isLoading) return <Loader />;
-        const { loading, profile } = this.props.data;
-        return loading ? <p>loading ...</p> : <Profile list={profile} />;
+        const { loading, user } = this.props.data;
+        return loading ? <p>loading ...</p> : <Profile user={user} />;
     }
 }
 
-const fetchUser = gql`
-    query {
+const getUser = gql`
+    query getUser($id: ID) {
         user(id: $id) {
-            title
-            id: id
-            itemowner {
-                id
-                fullname
-                email
-            }
-            borrower {
-                id
-                fullname
-            }
+            id
+            email
+            fullname
+            bio
             imageurl
-            description
-            available
-            created
-            tags {
+            shareditems {
                 id
                 title
+                created
+                itemowner {
+                    id
+                    email
+                    fullname
+                }
+                borrower {
+                    id
+                    fullname
+                }
+                imageurl
+                description
+                available
+                tags {
+                    id
+                    title
+                }
             }
         }
     }
 `;
 
-export default graphql(fetchUser)(ProfileContainer);
+export default graphql(getUser, {
+    options: ({ match }) => ({ variables: { id: match.params.userid } }),
+})(ProfileContainer);
 
 // import React, { Component } from 'react';
 // import { connect } from 'react-redux';
@@ -78,7 +87,6 @@ export default graphql(fetchUser)(ProfileContainer);
 // });
 
 // export default connect(mapStateToProps)(ProfileContainer);
-
 
 // const mapStateToProps = state => ({
 //     isLoading: state.profile.isLoading,

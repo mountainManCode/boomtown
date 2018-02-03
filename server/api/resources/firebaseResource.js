@@ -6,7 +6,7 @@ module.exports = app => {
 
   return {
     async getUsers() {
-      let users = await db.ref("user").once("value");
+      let users = await db.ref("users").once("value");
       users = users.val();
       let userList = [];
       for (userid in users) {
@@ -19,10 +19,11 @@ module.exports = app => {
         });
       }
       console.log(userList);
+      console.log(users);
       return userList;
     },
     async getUser(userid) {
-      let user = await db.ref(`users/${userid}`).once("value");
+      let user = await db.ref(`/users/${userid}`).once("value");
       user = user.val();
       return {
         id: userid,

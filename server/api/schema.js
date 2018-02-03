@@ -12,6 +12,7 @@ type Tag {
     fullname: String
     shareditems: [Item]
     imageurl: String
+    numborrowed: String
   }
 
   type Item {
@@ -28,13 +29,13 @@ type Tag {
 
   input TagInput {
     id: ID
-    title: String
   }
 
   input AddItemInput {
     imageurl: String
     title: String
     description: String
+    itemowner: ID
     tags: [TagInput]
   }
 
@@ -46,7 +47,7 @@ type Tag {
   }
 
   type Mutation {
-    addItem(newItem: AddItemInput): Item
+    createNewItem(newItem: AddItemInput): Item
     updateItem(currentItem: UpdateItemInput): Item 
   }
 

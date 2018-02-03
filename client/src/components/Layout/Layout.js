@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import HeaderBar from '../HeaderBar/HeaderBar';
@@ -30,7 +31,7 @@ const mapStateToProps = state => ({
     authenticated: state.auth.authenticated,
 });
 
-export default connect(mapStateToProps)(Layout);
+export default withRouter(connect(mapStateToProps)(Layout));
 
 // export default connect(({ authenticated, userLoading }) => ({
 //     authenticated,
