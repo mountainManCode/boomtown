@@ -1,4 +1,40 @@
-.shareWrapper {
+.share-container {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column;
+  color: #fff;
+  min-height: 100%;
+  width: 100%;
+}
+.share-preview-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center !important;
+  align-self: center;
+  align-items: center;
+  width: 40%;
+  margin: 5%;
+  padding-left: 10%;
+}
+.share-item-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  width: 100%;
+  margin: 5%;
+}
+
+@media only screen and (min-width: 450px) {
+  .share-container {
+    flex-flow: row nowrap;
+  }
+
+  /* .share-preview-card {
+    flex-basis: 45%;
+  }
+
+  .share-item-form {
+    flex-basis: 45%;
+  } */
 }

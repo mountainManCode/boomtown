@@ -66,7 +66,6 @@ class HeaderBar extends Component {
                             />
                         ))}
                     </SelectField>
-                    {/* </Route> */}
                 </ToolbarGroup>
                 <ToolbarGroup className="headerButtonWrapper">
                     <Link to="/profile">
@@ -77,12 +76,7 @@ class HeaderBar extends Component {
                         <RaisedButton
                             label="Logout"
                             onClick={() => {
-                                firebaseAuth
-                                    .signOut()
-                                    .then(() => {
-                                        // Sign-out successful.
-                                    })
-                                    .catch(error => {});
+                                firebaseAuth.signOut().catch(error => {});
                             }}
                             secondary
                         />

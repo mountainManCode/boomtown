@@ -64,6 +64,11 @@ const Boomtown = () => (
                                 />
                                 <PrivateRoute
                                     exact
+                                    path="/profile/:"
+                                    component={Profile}
+                                />
+                                <PrivateRoute
+                                    exact
                                     path="/share"
                                     component={Share}
                                 />
