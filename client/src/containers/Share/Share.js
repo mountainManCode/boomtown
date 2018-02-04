@@ -1,9 +1,11 @@
 import React from 'react';
-
-import PropTypes from 'prop-types';
+import { graphql, compose } from 'react-apollo';
+import gql from 'graphql-tag';
+// import PropTypes from 'prop-types';
 import firebase from 'firebase';
 import Placeholder from '../../images/item-placeholder.jpg';
-import FlatButton from 'material-ui/FlatButton';
+import './style.css';
+
 import {
     Card,
     CardActions,
@@ -14,7 +16,8 @@ import {
 } from 'material-ui/Card';
 import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
 
-import Moment from 'moment';
+import FlatButton from 'material-ui/FlatButton';
+
 import Gravatar from 'react-gravatar';
 // import FilterMenu from "../../components/FilterMenu";
 
@@ -24,10 +27,10 @@ import SelectField from 'material-ui/SelectField';
 
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
+import Moment from 'moment';
 
 // import { connect } from "react-redux";
 // import PropTypes from "prop-types";
-// import { gql, graphql } from "react-apollo";
 // import { Redirect } from "react-router-dom";
 // import { FirebaseStorage, FirebaseAuth } from "../../config/firebase";
 // import {
@@ -37,16 +40,22 @@ import TextField from 'material-ui/TextField';
 //   resetShareForm
 // } from "../../redux/modules/share";
 
-import './style.css';
-
 class Share extends React.Component {
     state = {
         finished: false,
         stepIndex: 0,
+        newTitle: '',
+        newDescription: '',
+        newImageurl: '',
+        newItemowner: '',
+        newTags: [],
     };
+
+    // Handlers for custom functionality
 
     handleNext = () => {
         const { stepIndex } = this.state;
+        // this.props.submit(this.state.title);
         this.setState({
             stepIndex: stepIndex + 1,
             finished: stepIndex >= 2,
@@ -60,13 +69,14 @@ class Share extends React.Component {
         }
     };
 
-    // Handlers for custom functionality
+    // Upload an image from local storage/computer.
     // https://time2hack.com/2017/10/upload-files-to-firebase-storage-with-javascript/
 
-    handleSelectClick = () => document.getElementById('imageInput').click();
+    handleImageSelect = () => document.getElementById('imageInput').click();
 
     handleImageUpload = input => {
         console.log(input.target.files[0].name);
+        const { newImageurl } = this.state;
         // create firebase storage reference
         const ref = firebase.storage().ref();
         // get the file to be uploaded from the input[type="file"]
@@ -80,11 +90,21 @@ class Share extends React.Component {
             .then(snapshot => {
                 const url = snapshot.downloadURL;
                 console.log(url);
-                // document.querySelector('#someImageTagID').src = url;
+                this.setState({ newImageurl: url });
             })
             .catch(error => {
                 console.error(error);
             });
+    };
+
+    // HANDLE MUTATION
+    handleItemTitle = createItem => {
+        this.setState({ title: createItem.target.value });
+        // console.log(createItem.target);
+    };
+
+    handleSubmit = () => {
+        this.props.submit(this.state.title);
     };
 
     renderStepActions(step) {
@@ -114,18 +134,29 @@ class Share extends React.Component {
     }
 
     render() {
-        const { finished, stepIndex } = this.state;
+        const {
+            finished,
+            stepIndex,
+            newTitle,
+            newDescription,
+            newImageurl,
+            newItemowner,
+            newTags,
+        } = this.state;
 
         return (
             <div className="share-container">
                 <section className="share-preview-card">
                     <Card style={{}} className="card">
                         <CardMedia className="card-media">
-                            <img src={Placeholder} alt="placeholder" />
+                            <img
+                                src={newImageurl || Placeholder}
+                                alt="Image of new item"
+                            />
                         </CardMedia>
 
                         <CardHeader
-                            title="Billy Bob"
+                            title={newTitle}
                             subtitle={Moment().fromNow()}
                             avatar={
                                 <Gravatar
@@ -154,7 +185,7 @@ class Share extends React.Component {
                                 </p>
                                 <RaisedButton
                                     label="Select an Image"
-                                    onClick={this.handleSelectClick}
+                                    onClick={this.handleImageSelect}
                                 >
                                     <input
                                         type="file"
@@ -176,7 +207,11 @@ class Share extends React.Component {
                                     Folks need to know what you're sharing. Give
                                     them a clue by adding a title & description.
                                 </p>
-                                <TextField hintText="Title" />
+                                <TextField
+                                    hintText="Title"
+                                    value={this.state.title}
+                                    onChange={this.handleItemTitle}
+                                />
                                 <br />
                                 <TextField hintText="Description" />
                                 {this.renderStepActions(1)}
@@ -215,4 +250,39 @@ class Share extends React.Component {
     }
 }
 
-export default Share;
+const createNewItem = gql`
+    mutation addNewItem(
+        $title: String
+        $description: String
+        $imageurl: String
+        $itemowner: ID
+        $tags: [TagInput]
+    ) {
+        createNewItem(
+            newItem: {
+                title: $title
+                description: $description
+                imageurl: $imageurl
+                itemowner: $itemowner
+                tags: $tags
+            }
+        ) {
+            title
+        }
+    }
+`;
+
+export default graphql(createNewItem, {
+    props: ({ mutate }) => ({
+        submit: (title, description, imageurl, itemowner, tags) =>
+            mutate({
+                variables: {
+                    title,
+                    description,
+                    imageurl,
+                    itemowner,
+                    tags,
+                },
+            }),
+    }),
+})(Share);
