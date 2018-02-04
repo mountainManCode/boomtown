@@ -1,14 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Placeholder from '../../images/item-placeholder.jpg';
-import Moment from 'moment';
-import Gravatar from 'react-gravatar';
-// import FilterMenu from "../../components/FilterMenu";
 
-// import Material UI components
-import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
-import RaisedButton from 'material-ui/RaisedButton';
-import SelectField from 'material-ui/SelectField';
+import PropTypes from 'prop-types';
+import firebase from 'firebase';
+import Placeholder from '../../images/item-placeholder.jpg';
 import FlatButton from 'material-ui/FlatButton';
 import {
     Card,
@@ -18,8 +12,19 @@ import {
     CardTitle,
     CardText,
 } from 'material-ui/Card';
+import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
+
+import Moment from 'moment';
+import Gravatar from 'react-gravatar';
+// import FilterMenu from "../../components/FilterMenu";
+
+// import Material UI components
+import RaisedButton from 'material-ui/RaisedButton';
+import SelectField from 'material-ui/SelectField';
+
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
+
 // import { connect } from "react-redux";
 // import PropTypes from "prop-types";
 // import { gql, graphql } from "react-apollo";
@@ -55,25 +60,32 @@ class Share extends React.Component {
         }
     };
 
-    // selectImage = fileInput => {
-    //   this.fileInput = this.fileInput || fileInput;
-    //   this.fileInput.click();
-    // };
+    // Handlers for custom functionality
+    // https://time2hack.com/2017/10/upload-files-to-firebase-storage-with-javascript/
 
-    // handleImageUpload = () => {
-    //   const firebaseStorage = FirebaseStorage.ref();
-    //   const userId = FirebaseAuth.currentUser.uid;
-    //   const fileName = this.fileInput.files[0].name;
+    handleSelectClick = () => document.getElementById('imageInput').click();
 
-    //   // updates the store with the new image
-    //   firebaseStorage
-    //     .child(`images/${userId}/${fileName}`)
-    //     .put(this.fileInput.files[0])
-    //     .then(result => {
-    //       this.props.dispatch(setItemImageUrl(result.metadata.downloadURLs[0]));
-    //       this.handleNext();
-    //     });
-    // };
+    handleImageUpload = input => {
+        console.log(input.target.files[0].name);
+        // create firebase storage reference
+        const ref = firebase.storage().ref();
+        // get the file to be uploaded from the input[type="file"]
+        const file = input.target.files[0];
+        const name = `${+new Date()}-${file.name}`;
+        const metadata = {
+            contentType: file.type,
+        };
+        const task = ref.child(name).put(file, metadata);
+        task
+            .then(snapshot => {
+                const url = snapshot.downloadURL;
+                console.log(url);
+                // document.querySelector('#someImageTagID').src = url;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
 
     renderStepActions(step) {
         const { stepIndex } = this.state;
@@ -140,7 +152,18 @@ class Share extends React.Component {
                                     We live in a visual culture. Upload an image
                                     of the item you're sharing.
                                 </p>
-                                <RaisedButton label="Select an Image" />
+                                <RaisedButton
+                                    label="Select an Image"
+                                    onClick={this.handleSelectClick}
+                                >
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={this.handleImageUpload}
+                                        hidden
+                                        id="imageInput"
+                                    />
+                                </RaisedButton>
                                 {this.renderStepActions(0)}
                             </StepContent>
                         </Step>
