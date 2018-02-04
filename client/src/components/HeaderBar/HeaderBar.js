@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import MenuItem from 'material-ui/MenuItem';
 // import Checkbox from "material-ui/Checkbox";
@@ -32,6 +32,8 @@ class HeaderBar extends Component {
 
     render() {
         // console.log(this.props.filters);
+        const userProfile = firebaseAuth.currentUser.uid;
+
         return (
             <Toolbar className="headerToolbar">
                 <ToolbarGroup firstChild className="headerTitleWrapper">
@@ -68,7 +70,7 @@ class HeaderBar extends Component {
                     </SelectField>
                 </ToolbarGroup>
                 <ToolbarGroup className="headerButtonWrapper">
-                    <Link to="/profile">
+                    <Link to={`/profile/${userProfile}`}>
                         <RaisedButton label="My Profile" primary />
                     </Link>
                     <ToolbarSeparator />
