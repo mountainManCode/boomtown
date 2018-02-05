@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import HeaderBar from '../HeaderBar/HeaderBar';
+import Footer from '../Footer/Footer';
 
 import './styles.css';
 
@@ -14,7 +15,7 @@ const Layout = ({ children, userLoading, authenticated }) =>
         <div className="appContentWrapper">
             <div className="appHeader">{authenticated && <HeaderBar />}</div>
             <div className="appContent">{children}</div>
-            {/* And a footer here, but not on the login route... */}
+            <div className="appFooter">{authenticated && <Footer />}</div>
         </div>
     ));
 
@@ -32,8 +33,3 @@ const mapStateToProps = state => ({
 });
 
 export default withRouter(connect(mapStateToProps)(Layout));
-
-// export default connect(({ authenticated, userLoading }) => ({
-//     authenticated,
-//     userLoading,
-// }))(Layout);

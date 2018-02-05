@@ -31,7 +31,6 @@ class HeaderBar extends Component {
     };
 
     render() {
-        // console.log(this.props.filters);
         const userProfile = firebaseAuth.currentUser.uid;
 
         return (

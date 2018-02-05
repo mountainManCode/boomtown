@@ -59,5 +59,3 @@ module.exports = ({
     }
   };
 };
-
-// retrun context.loaders.

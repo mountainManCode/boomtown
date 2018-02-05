@@ -69,50 +69,11 @@ const fetchItems = gql`
 
 const mapStateToProps = state => ({
     isLoading: state.items.isLoading,
-    // items: state.items.items,
     filterValue: state.filter.filterValue,
     filters: state.filter.filters,
     selectedFilters: state.filter.selectedFilters,
-    // error: state.items.error,
 });
 
 export default compose(graphql(fetchItems), connect(mapStateToProps))(
     ItemsContainer,
 );
-
-// return (
-//     <Items
-//         list={this.props.items.filter(item => {
-//             if (!this.props.selectedFilters.length) {
-//                 return true;
-//             }
-//             return item.tags.some(tag =>
-//                 this.props.selectedFilters.includes(tag.title),
-//             );
-
-//             /* return item.tags.includes(this.props.selectedFilters); */
-//         })}
-//     />
-
-// (mapStateToProps)
-// componentDidMount() {
-//   //TODO: fetch JSON and attach state!
-//   const items = fetch(ITEMS_URL).then(r => r.json());
-//   const users = fetch(USERS_URL).then(r => r.json());
-
-//   Promise.all([items, users]).then(response => {
-//     const [itemsList, usersList] = response;
-
-//     const combined = itemsList.map(item => {
-//       item.itemowner = usersList.find(user => user.id === item.itemowner);
-//       return item;
-//     });
-
-//     this.setState({ items: combined });
-//   });
-// }
-
-// console.log(response);
-// TODO: Merge the 2 lists together, into a single list.
-// Attach the new list to state, and pass that list into the items component.
-// the Items component should render the new list!

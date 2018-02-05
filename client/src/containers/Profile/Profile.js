@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Card, CardHeader, CardMedia, CardTitle } from 'material-ui/Card';
+import { Card } from 'material-ui/Card';
 import Gravatar from 'react-gravatar';
 import Masonry from 'react-masonry-component';
 

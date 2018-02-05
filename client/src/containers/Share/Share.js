@@ -1,45 +1,29 @@
 import React from 'react';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
+import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
-import firebase from 'firebase';
-import Placeholder from '../../images/item-placeholder.jpg';
-import './style.css';
-import { setFilterValue } from '../../redux/modules/filter';
 
+import Moment from 'moment';
+import Gravatar from 'react-gravatar';
 import {
     Card,
-    CardActions,
     CardHeader,
     CardMedia,
     CardTitle,
     CardText,
 } from 'material-ui/Card';
 import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
-
 import FlatButton from 'material-ui/FlatButton';
-
-import Gravatar from 'react-gravatar';
-// import FilterMenu from "../../components/FilterMenu";
-
-// import Material UI components
 import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
-
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
-import Moment from 'moment';
-
-import { connect } from 'react-redux';
-// import PropTypes from "prop-types";
-// import { Redirect } from "react-router-dom";
-// import { FirebaseStorage, FirebaseAuth } from "../../config/firebase";
-// import {
-//   updateStepIndex,
-//   setItemImageUrl,
-//   completeSignupForm,
-//   resetShareForm
-// } from "../../redux/modules/share";
+import firebase from 'firebase';
+import Placeholder from '../../images/item-placeholder.jpg';
+import './style.css';
+import { setFilterValue } from '../../redux/modules/filter';
+import { FirebaseStorage, FirebaseAuth } from '../../config/firebase';
 
 class Share extends React.Component {
     state = {
@@ -76,7 +60,7 @@ class Share extends React.Component {
     handleImageSelect = () => document.getElementById('imageInput').click();
 
     handleImageUpload = input => {
-        console.log(input.target.files[0].name);
+        // console.log(input.target.files[0].name);
         const { imageurl } = this.state;
         // create firebase storage reference
         const ref = firebase.storage().ref();
@@ -90,11 +74,10 @@ class Share extends React.Component {
         task
             .then(snapshot => {
                 const url = snapshot.downloadURL;
-                console.log(url);
                 this.setState({ imageurl: url });
             })
             .catch(error => {
-                console.error(error);
+                // console.error(error);
             });
     };
 
@@ -104,21 +87,32 @@ class Share extends React.Component {
     handleItemTitle = e => {
         const { title } = this.state;
         this.setState({ title: e.target.value });
-        // console.log(createItem.target);
     };
 
     handleItemDescription = e => {
         const { description } = this.state;
         this.setState({ description: e.target.value });
-        // console.log(createItem.target);
     };
 
     handleSelectFilter = (event, index, selected) => {
         this.props.dispatch(setFilterValue(selected));
-        // this.setState({ tags: e.target.value });
+        this.setState({ tags: event.target.value });
     };
 
-    handleSubmit = () => {
+    // handleSubmit = async () => {
+    //     const { title, description, imageurl, itemowner, tags } = this.state;
+    //     await this.props.postMutation({
+    //         variables: {
+    //             title,
+    //             description,
+    //             imageurl,
+    //             itemowner,
+    //             tags,
+    //         },
+    //     });
+    // };
+
+    handleSubmit = (title, description, imageurl, itemowner, tags) => {
         this.props.submit(this.state.title);
     };
 
@@ -161,6 +155,8 @@ class Share extends React.Component {
             tags,
         } = this.state;
 
+        // console.log(this.state);
+
         return (
             <div className="share-container">
                 <section className="share-preview-card">
@@ -178,7 +174,7 @@ class Share extends React.Component {
                             avatar={
                                 <Gravatar
                                     className="photo"
-                                    email="{firebaseAuth.currentUser.uid.email}"
+                                    email="{firebaseAuth.currentUser && firebaseAuth.currentUser.email}"
                                 />
                             }
                         />
@@ -326,6 +322,9 @@ const mapStateToProps = state => ({
 
 export default compose(
     graphql(createNewItem, {
+        //     name: 'postMutation',
+        // }),
+
         props: ({ mutate }) => ({
             submit: (title, description, imageurl, itemowner, tags) =>
                 mutate({
