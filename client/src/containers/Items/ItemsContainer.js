@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 // import items, { fetchItemsAndUsers } from '../../redux/modules/items';
 import Items from './Items';
-// import HeaderBar from '../../components/HeaderBar/HeaderBar';
+import HeaderBar from '../../components/HeaderBar/HeaderBar';
 // import Loader from "../../components/Loader";
 
 class ItemsContainer extends Component {
@@ -17,8 +17,27 @@ class ItemsContainer extends Component {
     };
 
     render() {
-        const { loading, items } = this.props.data;
-        return loading ? <p>loading ...</p> : <Items list={items} />;
+        const { loading, items, error } = this.props.data;
+        let filtered = [];
+
+        if (loading) {
+            return <p> Loading ... </p>;
+        } else if (error) {
+            return <p>error</p>;
+        } else if (items) {
+            filtered = items.filter(item =>
+                item.tags.some(tag =>
+                    this.props.selectedFilters.includes(tag.title),
+                ),
+            );
+        }
+        return (
+            <Items
+                list={
+                    this.props.selectedFilters.length === 0 ? items : filtered
+                }
+            />
+        );
     }
 }
 
