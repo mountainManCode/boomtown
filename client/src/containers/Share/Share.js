@@ -5,6 +5,7 @@ import gql from 'graphql-tag';
 import firebase from 'firebase';
 import Placeholder from '../../images/item-placeholder.jpg';
 import './style.css';
+import { setFilterValue } from '../../redux/modules/filter';
 
 import {
     Card,
@@ -29,7 +30,7 @@ import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 import Moment from 'moment';
 
-// import { connect } from "react-redux";
+import { connect } from 'react-redux';
 // import PropTypes from "prop-types";
 // import { Redirect } from "react-router-dom";
 // import { FirebaseStorage, FirebaseAuth } from "../../config/firebase";
@@ -44,11 +45,11 @@ class Share extends React.Component {
     state = {
         finished: false,
         stepIndex: 0,
-        newTitle: '',
-        newDescription: '',
-        newImageurl: '',
-        newItemowner: '',
-        newTags: [],
+        title: 'Awesome Item!',
+        description: 'Some Cool Stuff!',
+        imageurl: '',
+        itemowner: '',
+        tags: [],
     };
 
     // Handlers for custom functionality
@@ -76,7 +77,7 @@ class Share extends React.Component {
 
     handleImageUpload = input => {
         console.log(input.target.files[0].name);
-        const { newImageurl } = this.state;
+        const { imageurl } = this.state;
         // create firebase storage reference
         const ref = firebase.storage().ref();
         // get the file to be uploaded from the input[type="file"]
@@ -90,7 +91,7 @@ class Share extends React.Component {
             .then(snapshot => {
                 const url = snapshot.downloadURL;
                 console.log(url);
-                this.setState({ newImageurl: url });
+                this.setState({ imageurl: url });
             })
             .catch(error => {
                 console.error(error);
@@ -98,9 +99,23 @@ class Share extends React.Component {
     };
 
     // HANDLE MUTATION
-    handleItemTitle = createItem => {
-        this.setState({ title: createItem.target.value });
+    // https://marmelab.com/blog/2017/09/07/dive-into-graphql-part-iv-building-a-graphql-client-with-reactjs.html#calling-mutations
+
+    handleItemTitle = e => {
+        const { title } = this.state;
+        this.setState({ title: e.target.value });
         // console.log(createItem.target);
+    };
+
+    handleItemDescription = e => {
+        const { description } = this.state;
+        this.setState({ description: e.target.value });
+        // console.log(createItem.target);
+    };
+
+    handleSelectFilter = (event, index, selected) => {
+        this.props.dispatch(setFilterValue(selected));
+        // this.setState({ tags: e.target.value });
     };
 
     handleSubmit = () => {
@@ -117,7 +132,9 @@ class Share extends React.Component {
                     disableTouchRipple
                     disableFocusRipple
                     primary
-                    onClick={this.handleNext}
+                    onClick={
+                        stepIndex === 3 ? this.handleSubmit : this.handleNext
+                    }
                     style={{ marginRight: 12 }}
                 />
                 {step > 0 && (
@@ -137,11 +154,11 @@ class Share extends React.Component {
         const {
             finished,
             stepIndex,
-            newTitle,
-            newDescription,
-            newImageurl,
-            newItemowner,
-            newTags,
+            title,
+            description,
+            imageurl,
+            itemowner,
+            tags,
         } = this.state;
 
         return (
@@ -150,25 +167,25 @@ class Share extends React.Component {
                     <Card style={{}} className="card">
                         <CardMedia className="card-media">
                             <img
-                                src={newImageurl || Placeholder}
+                                src={imageurl || Placeholder}
                                 alt="Image of new item"
                             />
                         </CardMedia>
 
                         <CardHeader
-                            title={newTitle}
+                            title="Mandi Wise"
                             subtitle={Moment().fromNow()}
                             avatar={
                                 <Gravatar
                                     className="photo"
-                                    email="aa.griff9@gmail.com"
+                                    email="{firebaseAuth.currentUser.uid.email}"
                                 />
                             }
                         />
 
-                        <CardTitle title="Item Title" />
+                        <CardTitle title={title} />
 
-                        <CardText>Item description.</CardText>
+                        <CardText>{description}</CardText>
                     </Card>
                 </section>
 
@@ -213,7 +230,11 @@ class Share extends React.Component {
                                     onChange={this.handleItemTitle}
                                 />
                                 <br />
-                                <TextField hintText="Description" />
+                                <TextField
+                                    hintText="Description"
+                                    value={this.state.description}
+                                    onChange={this.handleItemDescription}
+                                />
                                 {this.renderStepActions(1)}
                             </StepContent>
                         </Step>
@@ -228,6 +249,29 @@ class Share extends React.Component {
                                     categories.
                                 </p>
                                 {/* <FilterMenu /> */}
+                                <SelectField
+                                    className="headerFilter"
+                                    multiple
+                                    autoWidth
+                                    floatingLabelText="Filter by Tag"
+                                    onChange={this.handleSelectFilter}
+                                    value={this.props.selectedFilters}
+                                >
+                                    {this.props.filters.map(tag => (
+                                        <MenuItem
+                                            insetChildren
+                                            key={tag.title}
+                                            checked={
+                                                !!this.props.selectedFilters.find(
+                                                    f => f === tag.title,
+                                                )
+                                            }
+                                            value={tag.title}
+                                            primaryText={tag.title}
+                                            // .includes .some
+                                        />
+                                    ))}
+                                </SelectField>
                                 {this.renderStepActions(2)}
                             </StepContent>
                         </Step>
@@ -271,18 +315,29 @@ const createNewItem = gql`
         }
     }
 `;
+const mapStateToProps = state => ({
+    isLoading: state.items.isLoading,
+    // items: state.items.items,
+    filterValue: state.filter.filterValue,
+    filters: state.filter.filters,
+    selectedFilters: state.filter.selectedFilters,
+    // error: state.items.error,
+});
 
-export default graphql(createNewItem, {
-    props: ({ mutate }) => ({
-        submit: (title, description, imageurl, itemowner, tags) =>
-            mutate({
-                variables: {
-                    title,
-                    description,
-                    imageurl,
-                    itemowner,
-                    tags,
-                },
-            }),
+export default compose(
+    graphql(createNewItem, {
+        props: ({ mutate }) => ({
+            submit: (title, description, imageurl, itemowner, tags) =>
+                mutate({
+                    variables: {
+                        title,
+                        description,
+                        imageurl,
+                        itemowner,
+                        tags,
+                    },
+                }),
+        }),
     }),
-})(Share);
+    connect(mapStateToProps),
+)(Share);
