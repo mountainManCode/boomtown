@@ -60,7 +60,7 @@ class Share extends React.Component {
     handleImageSelect = () => document.getElementById('imageInput').click();
 
     handleImageUpload = input => {
-        // console.log(input.target.files[0].name);
+        console.log(input.target.files[0].name);
         const { imageurl } = this.state;
         // create firebase storage reference
         const ref = firebase.storage().ref();

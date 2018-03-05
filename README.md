@@ -1,6 +1,6 @@
 # Boomtown Starter
 
-An application to share your goods and items with the community. Built with React, GraphQL, and Redux.
+An application to share your goods and items with the community. Built with React-Native and Redux.
 ## Installation
 
 Download the repo, then run:
