@@ -1,6 +1,8 @@
-# Boomtown Starter
+# Boomtown
 
-An application to share your goods and items with the community. Built with React-Native and Redux.
+An application to share your goods and items with the community. Built with React, Express, GraphQL and Redux.
+
+login mandi@redacademy.com pass: password
 ## Installation
 
 Download the repo, then run:
@@ -17,8 +19,18 @@ From inside the `client` directory, run:
 npm run dev
 ```
 
+From inside the `server` directory, run:
+
+```bash
+npm run dev
+```
+
 ## Technology Used
-* React
+* React/react-router/react-router-redux
+* JavaScript
+* Express
+* PostgreSQL
+* Firebase
 * GraphQL - Apollo
 * Redux
 * Git - Github
@@ -33,6 +45,6 @@ npm run dev
 * **Aaron Griffiths** - (aa.griff9@gmail.com)
 
 ** Acknowledgement
-* Thanks to the Red team for providing the materials and skills to make this site happen.
+* Thanks to the Red instructor team for providing the materials and skills to make this site happen.
 *Thanks to my cohort for their support.
 
