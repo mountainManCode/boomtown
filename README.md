@@ -2,7 +2,8 @@
 
 An application to share your goods and items with the community. Built with React, Express, GraphQL and Redux.
 
-login mandi@redacademy.com pass: password
+login: mandi@redacademy.com pass: password
+
 ## Installation
 
 Download the repo, then run:
@@ -22,7 +23,7 @@ npm run dev
 From inside the `server` directory, run:
 
 ```bash
-npm run dev
+npm start
 ```
 
 ## Technology Used
@@ -42,7 +43,8 @@ npm run dev
 * Redux is filtering the tags on items in various components.
 
 ## Authors
-* **Aaron Griffiths** - (aa.griff9@gmail.com)
+* **Aaron Griffiths** 
+
 
 ** Acknowledgement
 * Thanks to the Red instructor team for providing the materials and skills to make this site happen.

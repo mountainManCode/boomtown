@@ -1,5 +1,11 @@
 module.exports = ({
-  postgresResource: { getTags, getItem, getItems, getShareditems, createItem },
+  postgresResource: {
+    getTags,
+    getItem,
+    getItems,
+    getShareditems,
+    createNewItem
+  },
   firebaseResource: { getUser, getUsers }
 }) => {
   return {
@@ -11,7 +17,6 @@ module.exports = ({
         return context.loaders.getUsers.load(args);
       },
       user(root, { id }, context) {
-        // console.log(args);
         return context.loaders.getUser.load(id);
       },
       item(root, { id }, context) {
@@ -20,17 +25,12 @@ module.exports = ({
     },
     Mutation: {
       createNewItem(root, { newItem }) {
-        return createItem(newItem);
-      },
-      updateItem(root, { newItem: { id, borrower: { fullname, email } } }) {
-        return { fullname, email };
+        console.log(newItem);
+        return createNewItem(newItem);
       }
-
-      // addItem(root, { newItem: { title } }) {
-      //   // save the new item to the database.
-      //   // Must return Item Type thanks to our mutation schema.
-
-      //   return { title };
+      // updateItem(root, { newItem: { id, borrower: { fullname, email } } }) {
+      //   return updateItem(id, borrower);
+      // { fullname, email };
       // }
     },
     Item: {

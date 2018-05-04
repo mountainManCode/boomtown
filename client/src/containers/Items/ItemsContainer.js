@@ -4,7 +4,6 @@ import gql from 'graphql-tag';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-// import items, { fetchItemsAndUsers } from '../../redux/modules/items';
 import Items from './Items';
 import HeaderBar from '../../components/HeaderBar/HeaderBar';
 // import Loader from "../../components/Loader";

@@ -18,9 +18,9 @@ type Tag {
   type Item {
     id: ID
     title: String
-    created: String
     itemowner: User
     borrower: User
+    created: String    
     imageurl: String
     description: String
     available: Boolean
@@ -32,9 +32,9 @@ type Tag {
   }
 
   input AddItemInput {
-    imageurl: String
     title: String
     description: String
+    imageurl: String
     itemowner: ID
     tags: [TagInput]
   }
@@ -51,10 +51,12 @@ type Tag {
     updateItem(currentItem: UpdateItemInput): Item 
   }
 
-  type Query {
+  type Query{
     items: [Item]
-    item(id: ID): Item    
     users: [User]
+    tags: [Tag]
     user(id: ID): User
+    item(id: ID): Item
+    tag(id: ID): Tag
   }
 `;

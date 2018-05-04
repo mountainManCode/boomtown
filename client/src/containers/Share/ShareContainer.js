@@ -2,23 +2,6 @@ import React, { Component } from 'react';
 import { graphql, compose, Mutation, withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
-
-// import Moment from 'moment';
-// import Gravatar from 'react-gravatar';
-// import {
-//     Card,
-//     CardHeader,
-//     CardMedia,
-//     CardTitle,
-//     CardText,
-// } from 'material-ui/Card';
-// import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
-// import FlatButton from 'material-ui/FlatButton';
-// import RaisedButton from 'material-ui/RaisedButton';
-// import SelectField from 'material-ui/SelectField';
-// import MenuItem from 'material-ui/MenuItem';
-// import TextField from 'material-ui/TextField';
 import firebase from 'firebase';
 import Placeholder from '../../images/item-placeholder.jpg';
 import './style.css';
@@ -28,7 +11,7 @@ import { FirebaseStorage, FirebaseAuth } from '../../config/firebase';
 import Share from './Share';
 
 const SubmitNewItem = gql`
-    mutation createNewItem(
+    mutation addNewItem(
         $title: String
         $description: String
         $imageurl: String
@@ -49,6 +32,32 @@ const SubmitNewItem = gql`
     }
 `;
 
+const fetchItems = gql`
+    query {
+        items {
+            title
+            id: id
+            itemowner {
+                id
+                fullname
+                email
+            }
+            borrower {
+                id
+                fullname
+            }
+            imageurl
+            description
+            available
+            created
+            tags {
+                id
+                title
+            }
+        }
+    }
+`;
+
 class ShareContainer extends Component {
     state = {
         // finished: false,
@@ -58,7 +67,7 @@ class ShareContainer extends Component {
         created: Date.now(),
         imageurl: '',
         itemowner: 'ol1hO7xyPUM7JChl5vJYswhwqZw2',
-        tags: [],
+        tags: [{ id: 1 }],
     };
 
     // Handlers for custom functionality
@@ -116,6 +125,7 @@ class ShareContainer extends Component {
     handleItemDescription = e => {
         const { description } = this.state;
         this.setState({ description: e.target.value });
+        // console.log(this.props);
     };
 
     handleSelectFilter = (event, index, selected) => {
@@ -127,17 +137,30 @@ class ShareContainer extends Component {
         // console.log(this.props.selectedFilters);
     };
 
-    handleSubmit = () => {
-        const { title, description, imageurl, itemowner, tags } = this.state;
-        this.props.mutate({
-            variables: {
-                title,
-                description,
-                imageurl,
-                itemowner,
-                tags,
-            },
-        });
+    handleSubmit = async e => {
+        e.persist();
+        // const { title, description, imageurl, itemowner, tags } = this.state;
+        try {
+            await this.props.mutate({
+                variables: {
+                    title: this.state.title,
+                    // || 'Awesome item',
+                    description: this.state.description,
+                    // || 'Too cool to be true',
+                    imageurl: this.state.imageurl,
+                    itemowner: this.state.itemowner,
+                    tags: this.state.tags,
+                },
+                // update: (proxy, { data: { createNewItem } }) => {
+                //     const data = proxy.readQuery({ query: fetchItems });
+
+                //     data.items.push(createNewItem);
+                //     proxy.writeQuery({ query: fetchItems, data });
+                // },
+            });
+        } catch (error) {
+            console.log('Error sending mutation:', error);
+        }
     };
 
     // title, description, imageurl, itemowner, tags
@@ -175,6 +198,7 @@ class ShareContainer extends Component {
                 handleSubmit={this.handleSubmit}
                 filters={this.props.filters}
                 selectedFilters={this.props.selectedFilters}
+                currentState={this.state}
             />
         );
     }
@@ -183,29 +207,15 @@ class ShareContainer extends Component {
 const mapStateToProps = state => ({
     isLoading: state.items.isLoading,
     // items: state.items.items,
-    filterValue: state.filter.filterValue,
+    // filterValue: state.filter.filterValue,
     filters: state.filter.filters,
-    selectedFilters: state.filter.selectedFilters,
+    // selectedFilters: state.filter.selectedFilters,
     // error: state.items.error,
 });
 
 export default compose(
     withApollo,
     graphql(SubmitNewItem),
-
-    //     props: ({ mutate }) => ({
-    //         submit: (title, description, imageurl, itemowner, tags) =>
-    //             mutate({
-    //                 variables: {
-    //                     title,
-    //                     description,
-    //                     imageurl,
-    //                     itemowner,
-    //                     tags,
-    //                 },
-    //             }),
-    //     }),
-    // }),
     connect(mapStateToProps),
 )(ShareContainer);
 
