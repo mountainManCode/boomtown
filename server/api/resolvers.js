@@ -1,5 +1,6 @@
 module.exports = ({
   postgresResource: {
+    getItemTags,
     getTags,
     getItem,
     getItems,
@@ -15,6 +16,9 @@ module.exports = ({
       },
       users(root, { args }, context) {
         return context.loaders.getUsers.load(args);
+      },
+      tags() {
+        return getTags();
       },
       user(root, { id }, context) {
         return context.loaders.getUser.load(id);
@@ -45,7 +49,7 @@ module.exports = ({
         }
       },
       tags(item, args, context) {
-        return context.loaders.getTags.load(item.id);
+        return context.loaders.getItemTags.load(item.id);
       }
     },
     User: {

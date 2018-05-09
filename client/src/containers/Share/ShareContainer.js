@@ -3,12 +3,13 @@ import { graphql, compose, Mutation, withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
-import Placeholder from '../../images/item-placeholder.jpg';
-import './style.css';
-import { setFilterValue } from '../../redux/modules/filter';
-import { FirebaseStorage, FirebaseAuth } from '../../config/firebase';
 
+import { FirebaseStorage, firebaseAuth } from '../../config/firebase';
+import { setFilterValue, resetTags } from '../../redux/modules/filter';
+import Placeholder from '../../images/item-placeholder.jpg';
 import Share from './Share';
+import TagSelectFilter from '../../components/TagSelectFilter/TagSelectFilter';
+import './style.css';
 
 const SubmitNewItem = gql`
     mutation addNewItem(
@@ -60,33 +61,30 @@ const fetchItems = gql`
 
 class ShareContainer extends Component {
     state = {
-        // finished: false,
-        // stepIndex: 0,
+        finished: false,
+        stepIndex: 0,
         title: 'Awesome Item!',
         description: 'Some Cool Stuff!',
         created: Date.now(),
         imageurl: '',
         itemowner: 'ol1hO7xyPUM7JChl5vJYswhwqZw2',
-        tags: [{ id: 1 }],
+        tags: [],
     };
 
-    // Handlers for custom functionality
+    handleNext = () => {
+        const { stepIndex } = this.state;
+        this.setState({
+            stepIndex: stepIndex + 1,
+            finished: stepIndex >= 2,
+        });
+    };
 
-    // handleNext = () => {
-    //     const { stepIndex } = this.state;
-    //     // this.props.submit(this.state.title);
-    //     this.setState({
-    //         stepIndex: stepIndex + 1,
-    //         finished: stepIndex >= 2,
-    //     });
-    // };
-
-    // handlePrev = () => {
-    //     const { stepIndex } = this.state;
-    //     if (stepIndex > 0) {
-    //         this.setState({ stepIndex: stepIndex - 1 });
-    //     }
-    // };
+    handlePrev = () => {
+        const { stepIndex } = this.state;
+        if (stepIndex > 0) {
+            this.setState({ stepIndex: stepIndex - 1 });
+        }
+    };
 
     // Upload an image from local storage/computer.
     // https://time2hack.com/2017/10/upload-files-to-firebase-storage-with-javascript/
@@ -110,12 +108,11 @@ class ShareContainer extends Component {
                 this.setState({ imageurl: url });
             })
             .catch(error => {
-                // console.error(error);
+                console.log(error);
             });
     };
 
     // HANDLE MUTATION
-    // https://marmelab.com/blog/2017/09/07/dive-into-graphql-part-iv-building-a-graphql-client-with-reactjs.html#calling-mutations
 
     handleItemTitle = e => {
         const { title } = this.state;
@@ -125,67 +122,29 @@ class ShareContainer extends Component {
     handleItemDescription = e => {
         const { description } = this.state;
         this.setState({ description: e.target.value });
-        // console.log(this.props);
     };
 
-    handleSelectFilter = (event, index, selected) => {
-        this.props.dispatch(setFilterValue(selected));
-        this.setState({
-            tags: this.props.selectedFilters,
-            // event.target.value
-        });
-        // console.log(this.props.selectedFilters);
-    };
-
+    // Submit the Mutation
     handleSubmit = async e => {
         e.persist();
-        // const { title, description, imageurl, itemowner, tags } = this.state;
+        const { uid } = firebaseAuth.currentUser;
+        const { title, description, imageurl, itemowner } = this.state;
         try {
             await this.props.mutate({
                 variables: {
-                    title: this.state.title,
-                    // || 'Awesome item',
-                    description: this.state.description,
-                    // || 'Too cool to be true',
-                    imageurl: this.state.imageurl,
-                    itemowner: this.state.itemowner,
-                    tags: this.state.tags,
+                    title,
+                    description,
+                    imageurl,
+                    itemowner: uid,
+                    tags: this.props.tagsSelected.map(tag => ({ id: tag })),
                 },
-                // update: (proxy, { data: { createNewItem } }) => {
-                //     const data = proxy.readQuery({ query: fetchItems });
-
-                //     data.items.push(createNewItem);
-                //     proxy.writeQuery({ query: fetchItems, data });
-                // },
             });
         } catch (error) {
             console.log('Error sending mutation:', error);
         }
+        this.props.dispatch(resetTags());
+        // this.props.history.push('/');
     };
-
-    // title, description, imageurl, itemowner, tags
-    // handleSubmit = item => {
-    //     this.props.submit(
-    //         this.state.title,
-    //         this.state.description,
-    //         this.state.imageurl,
-    //         this.state.itemowner,
-    //     );
-    // };
-
-    // handleSubmit = () => {
-    //     console.log(this.props);
-    //     const { title, description, imageurl, itemowner, tags } = this.state;
-    //     this.props.createNewItem({
-    //         variables: {
-    //             title,
-    //             description,
-    //             imageurl,
-    //             itemowner,
-    //             tags,
-    //         },
-    //     });
-    // };
 
     render() {
         return (
@@ -194,10 +153,12 @@ class ShareContainer extends Component {
                 handleImageUpload={this.handleImageUpload}
                 handleItemDescription={this.handleItemDescription}
                 handleItemTitle={this.handleItemTitle}
+                handleNext={this.handleNext}
+                handlePrev={this.handlePrev}
                 handleSelectFilter={this.handleSelectFilter}
                 handleSubmit={this.handleSubmit}
-                filters={this.props.filters}
-                selectedFilters={this.props.selectedFilters}
+                tagsList={this.props.tagsList}
+                tagsSelected={this.props.tagsSelected}
                 currentState={this.state}
             />
         );
@@ -208,8 +169,8 @@ const mapStateToProps = state => ({
     isLoading: state.items.isLoading,
     // items: state.items.items,
     // filterValue: state.filter.filterValue,
-    filters: state.filter.filters,
-    // selectedFilters: state.filter.selectedFilters,
+    tagsList: state.filter.tagsList,
+    tagsSelected: state.filter.tagsSelected,
     // error: state.items.error,
 });
 

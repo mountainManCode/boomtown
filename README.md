@@ -2,7 +2,7 @@
 
 An application to share your goods and items with the community. Built with React, Express, GraphQL and Redux.
 
-login: mandi@redacademy.com pass: password
+login: bart@simpsons.com password: password
 
 ## Installation
 
@@ -17,7 +17,7 @@ cd client && npm install
 From inside the `client` directory, run:
 
 ```bash
-npm run dev
+npm start
 ```
 
 From inside the `server` directory, run:
@@ -27,7 +27,7 @@ npm start
 ```
 
 ## Technology Used
-* React/react-router/react-router-redux
+* React - react router
 * JavaScript
 * Express
 * PostgreSQL
@@ -46,7 +46,7 @@ npm start
 * **Aaron Griffiths** 
 
 
-** Acknowledgement
+## Acknowledgement
 * Thanks to the Red instructor team for providing the materials and skills to make this site happen.
-*Thanks to my cohort for their support.
+* Thanks to my cohort for their support.
 

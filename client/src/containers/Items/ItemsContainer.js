@@ -18,7 +18,6 @@ class ItemsContainer extends Component {
     render() {
         const { loading, items, error } = this.props.data;
         let filtered = [];
-
         if (loading) {
             return <p> Loading ... </p>;
         } else if (error) {
@@ -26,15 +25,13 @@ class ItemsContainer extends Component {
         } else if (items) {
             filtered = items.filter(item =>
                 item.tags.some(tag =>
-                    this.props.selectedFilters.includes(tag.title),
+                    this.props.tagsSelected.includes(Number(tag.id)),
                 ),
             );
         }
         return (
             <Items
-                list={
-                    this.props.selectedFilters.length === 0 ? items : filtered
-                }
+                list={this.props.tagsSelected.length === 0 ? items : filtered}
             />
         );
     }
@@ -66,13 +63,23 @@ const fetchItems = gql`
     }
 `;
 
+// const fetchTags = gql`
+//     query {
+//         tags {
+//             id
+//             title
+//         }
+//     }
+// `;
+
 const mapStateToProps = state => ({
     isLoading: state.items.isLoading,
-    filterValue: state.filter.filterValue,
-    filters: state.filter.filters,
-    selectedFilters: state.filter.selectedFilters,
+    tagsList: state.filter.tagsList,
+    tagsSelected: state.filter.tagsSelected,
 });
 
-export default compose(graphql(fetchItems), connect(mapStateToProps))(
-    ItemsContainer,
-);
+export default compose(
+    graphql(fetchItems),
+    // graphql(fetchTags),
+    connect(mapStateToProps),
+)(ItemsContainer);

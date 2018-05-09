@@ -12,7 +12,7 @@ import { setFilterValue } from '../../redux/modules/filter';
 
 import Logo from '../../images/boomtown-logo.svg';
 
-// import SelectFilter from "../SelectFilter/SelectFilter";
+import TagSelectFilter from '../TagSelectFilter/TagSelectFilter';
 
 // import Login from "../../containers/Login/Login";
 // import Items from "../../containers/Items/Items";
@@ -43,30 +43,7 @@ class HeaderBar extends Component {
                             alt="Boomtown logo"
                         />
                     </Link>
-
-                    <SelectField
-                        className="headerFilter"
-                        multiple
-                        autoWidth
-                        floatingLabelText="Filter by Tag"
-                        onChange={this.handleChange}
-                        value={this.props.selectedFilters}
-                    >
-                        {this.props.filters.map(tag => (
-                            <MenuItem
-                                insetChildren
-                                key={tag.title}
-                                checked={
-                                    !!this.props.selectedFilters.find(
-                                        f => f === tag.title,
-                                    )
-                                }
-                                value={tag.title}
-                                primaryText={tag.title}
-                                // .includes .some
-                            />
-                        ))}
-                    </SelectField>
+                    <TagSelectFilter />
                 </ToolbarGroup>
                 <ToolbarGroup className="headerButtonWrapper">
                     <Link to={`/profile/${userProfile}`}>
@@ -89,8 +66,8 @@ class HeaderBar extends Component {
 }
 
 const mapStateToProps = state => ({
-    selectedFilters: state.filter.selectedFilters,
-    filters: state.filter.filters,
+    tagsSelected: state.filter.tagsSelected,
+    tagsList: state.filter.tagsList,
 });
 
 export default connect(mapStateToProps)(HeaderBar);

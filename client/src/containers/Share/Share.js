@@ -20,56 +20,16 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 import firebase from 'firebase';
-import Placeholder from '../../images/item-placeholder.jpg';
-import './style.css';
 import { setFilterValue } from '../../redux/modules/filter';
 import { FirebaseStorage, FirebaseAuth } from '../../config/firebase';
 
-// const SubmitNewItem = gql`
-//     mutation createNewItem(
-//         $title: String
-//         $description: String
-//         $imageurl: String
-//         $itemowner: ID
-//         $tags: [TagInput]
-//     ) {
-//         createNewItem(
-//             newItem: {
-//                 title: $title
-//                 description: $description
-//                 imageurl: $imageurl
-//                 itemowner: $itemowner
-//                 tags: $tags
-//             }
-//         ) {
-//             title
-//         }
-//     }
-// `;
+import Placeholder from '../../images/item-placeholder.jpg';
+import TagSelectFilter from '../../components/TagSelectFilter/TagSelectFilter';
+import './style.css';
 
 class Share extends Component {
-    state = {
-        finished: false,
-        stepIndex: 0,
-    };
-
-    handleNext = () => {
-        const { stepIndex } = this.state;
-        this.setState({
-            stepIndex: stepIndex + 1,
-            finished: stepIndex >= 2,
-        });
-    };
-
-    handlePrev = () => {
-        const { stepIndex } = this.state;
-        if (stepIndex > 0) {
-            this.setState({ stepIndex: stepIndex - 1 });
-        }
-    };
-
     renderStepActions(step) {
-        const { finished, stepIndex } = this.state;
+        const { finished, stepIndex } = this.props.currentState;
 
         return (
             <div style={{ margin: '12px 0' }}>
@@ -79,7 +39,7 @@ class Share extends Component {
                         disableTouchRipple
                         disableFocusRipple
                         primary
-                        onClick={this.handleNext}
+                        onClick={this.props.handleNext}
                         style={{ marginRight: 12 }}
                     />
                 )}
@@ -102,7 +62,7 @@ class Share extends Component {
                         disabled={stepIndex === 0}
                         disableTouchRipple
                         disableFocusRipple
-                        onClick={this.handlePrev}
+                        onClick={this.props.handlePrev}
                     />
                 )}
             </div>
@@ -118,7 +78,7 @@ class Share extends Component {
             imageurl,
             itemowner,
             tags,
-        } = this.state;
+        } = this.props.currentState;
 
         const {
             handleImageSelect,
@@ -128,9 +88,6 @@ class Share extends Component {
             handleSelectFilter,
             handleSubmit,
         } = this.props;
-
-        // console.log(this.state);
-        // console.log(this.props);
 
         return (
             <div className="share-container">
@@ -236,32 +193,10 @@ class Share extends Component {
                                         list of categories. You can select
                                         multiple categories.
                                     </p>
-                                    <SelectField
-                                        className="headerFilter"
-                                        multiple
-                                        autoWidth
-                                        floatingLabelText="Filter by Tag"
-                                        onChange={e => {
-                                            handleSelectFilter(e);
-                                        }}
-                                        value={this.selectedFilters}
-                                    >
-                                        {this.props.filters.map(tag => (
-                                            <MenuItem
-                                                insetChildren
-                                                key={tag.title}
-                                                checked={
-                                                    !!this.props.selectedFilters.find(
-                                                        f => f === tag.title,
-                                                    )
-                                                }
-                                                value={tag.title}
-                                                primaryText={tag.title}
-                                                // .includes .some
-                                            />
-                                        ))}
-                                    </SelectField>
-                                    {this.renderStepActions(2)}
+                                    <TagSelectFilter />
+                                    {this.props.tagsSelected.length
+                                        ? this.renderStepActions(2)
+                                        : null}
                                 </StepContent>
                             </Step>
                             <Step>
@@ -285,12 +220,3 @@ class Share extends Component {
 }
 
 export default Share;
-
-// const mapStateToProps = state => ({
-//     isLoading: state.items.isLoading,
-//     // items: state.items.items,
-//     filterValue: state.filter.filterValue,
-//     filters: state.filter.filters,
-//     selectedFilters: state.filter.selectedFilters,
-//     // error: state.items.error,
-// });
