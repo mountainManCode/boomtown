@@ -43,7 +43,6 @@ class HeaderBar extends Component {
                             alt="Boomtown logo"
                         />
                     </Link>
-                    {/* <TagSelectFilter /> */}
                     <Route exact path="/" component={TagSelectFilter} />
                 </ToolbarGroup>
                 <ToolbarGroup className="headerButtonWrapper">
