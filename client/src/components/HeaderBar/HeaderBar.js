@@ -12,7 +12,7 @@ import { setFilterValue } from '../../redux/modules/filter';
 
 import Logo from '../../images/boomtown-logo.svg';
 
-import TagSelectFilter from '../TagSelectFilter/TagSelectFilter';
+import TagSelectFilter from '../TagSelectFilter';
 
 // import Login from "../../containers/Login/Login";
 // import Items from "../../containers/Items/Items";
@@ -26,9 +26,9 @@ class HeaderBar extends Component {
         };
     }
 
-    handleChange = (event, index, selected) => {
-        this.props.dispatch(setFilterValue(selected));
-    };
+    // handleChange = (event, index, selected) => {
+    //     this.props.dispatch(setFilterValue(selected));
+    // };
 
     render() {
         const userProfile = firebaseAuth.currentUser.uid;
@@ -43,7 +43,8 @@ class HeaderBar extends Component {
                             alt="Boomtown logo"
                         />
                     </Link>
-                    <TagSelectFilter />
+                    {/* <TagSelectFilter /> */}
+                    <Route exact path="/" component={TagSelectFilter} />
                 </ToolbarGroup>
                 <ToolbarGroup className="headerButtonWrapper">
                     <Link to={`/profile/${userProfile}`}>
