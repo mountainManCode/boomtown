@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Card } from 'material-ui/Card';
-import Gravatar from 'react-gravatar';
+import Avatar from 'material-ui/Avatar';
 import Masonry from 'react-masonry-component';
 
 import PropTypes from 'prop-types';
@@ -27,8 +27,8 @@ const Profile = ({ items, user }) => (
                         <span>{user.numborrowed}</span> Items borrowed
                     </p>
                 </div>
-                <Gravatar
-                    email={user.email}
+                <Avatar
+                    src={user.imageurl}
                     className="user-gravatar"
                     size={170}
                 />

@@ -4,6 +4,10 @@ An application to share your goods and items with the community. Built with Reac
 
 login: bart@simpsons.com password: password
 
+<img src="./boomtown-1.png" width="600" height="300">
+
+<img src="./boomtown-2.png" width="600" height="300">
+
 ## Installation
 
 Download the repo, then run:
@@ -40,10 +44,10 @@ npm start
 * React for client side. With 2 sets of Components: Components - presentational & Containers - functional.
 * Server side uses Firebase to hold User info and Authentication. And PostgresSQL for the Item database.
 * GraphQL for User and Item Queries and Mutations.
-* Redux is filtering the tags on items in various components.
+* Redux is filtering the tags on items and for user authentication.
 
 ## Authors
-* **Aaron Griffiths** 
+* **Aaron Griffiths** - (aa.griff9@gmail.com)
 
 
 ## Acknowledgement

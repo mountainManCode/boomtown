@@ -87,6 +87,7 @@ class Share extends Component {
             handleItemTitle,
             handleSelectFilter,
             handleSubmit,
+            currentUser,
         } = this.props;
 
         return (
@@ -101,7 +102,7 @@ class Share extends Component {
                         </CardMedia>
 
                         <CardHeader
-                            title="Mandi Wise"
+                            title="Bart Simpson"
                             subtitle={Moment().fromNow()}
                             avatar={
                                 <Gravatar

@@ -88,11 +88,6 @@ module.exports = async app => {
           tags
         )}`;
 
-        // const tagResult = await client.query(tagsInsertQuery, [
-        //   itemResult.rows[0].id,
-        //   ...tags
-        // ]);
-
         await client.query(tagsInsertQuery, [itemResult.rows[0].id, ...tags]);
 
         await client.query('COMMIT');

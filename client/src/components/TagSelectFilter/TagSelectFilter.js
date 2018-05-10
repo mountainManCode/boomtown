@@ -19,6 +19,10 @@ class TagSelectFilter extends Component {
                 multiple
                 autoWidth
                 floatingLabelText="Filter by Tag"
+                checked={
+                    this.props.tagsSelected &&
+                    this.props.tagsSelected.indexOf(this.props.tagsList) > -1
+                }
                 onChange={this.handleChange}
                 value={this.props.tagsSelected}
             >

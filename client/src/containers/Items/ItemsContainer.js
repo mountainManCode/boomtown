@@ -46,6 +46,7 @@ const fetchItems = gql`
                 id
                 fullname
                 email
+                imageurl
             }
             borrower {
                 id

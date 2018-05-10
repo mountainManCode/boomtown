@@ -11,12 +11,7 @@ import { firebaseAuth } from '../../config/firebase';
 import { setFilterValue } from '../../redux/modules/filter';
 
 import Logo from '../../images/boomtown-logo.svg';
-
 import TagSelectFilter from '../TagSelectFilter';
-
-// import Login from "../../containers/Login/Login";
-// import Items from "../../containers/Items/Items";
-// import ItemCard from "../ItemCard/ItemCard";
 
 class HeaderBar extends Component {
     constructor(props) {
@@ -25,10 +20,6 @@ class HeaderBar extends Component {
             value: [],
         };
     }
-
-    // handleChange = (event, index, selected) => {
-    //     this.props.dispatch(setFilterValue(selected));
-    // };
 
     render() {
         const userProfile = firebaseAuth.currentUser.uid;

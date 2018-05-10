@@ -59,6 +59,39 @@ const fetchItems = gql`
     }
 `;
 
+const fetchUser = gql`
+    query getUser($id: ID) {
+        user(id: $id) {
+            id
+            email
+            fullname
+            bio
+            imageurl
+            shareditems {
+                id
+                title
+                created
+                itemowner {
+                    id
+                    email
+                    fullname
+                }
+                borrower {
+                    id
+                    fullname
+                }
+                imageurl
+                description
+                available
+                tags {
+                    id
+                    title
+                }
+            }
+        }
+    }
+`;
+
 class ShareContainer extends Component {
     state = {
         finished: false,
@@ -106,6 +139,7 @@ class ShareContainer extends Component {
             .then(snapshot => {
                 const url = snapshot.downloadURL;
                 this.setState({ imageurl: url });
+                console.log(url);
             })
             .catch(error => {
                 console.log(error);
@@ -138,6 +172,7 @@ class ShareContainer extends Component {
                     itemowner: uid,
                     tags: this.props.tagsSelected.map(tag => ({ id: tag })),
                 },
+                refetchQueries: [{ query: fetchItems, fetchUser }],
             });
         } catch (error) {
             console.log('Error sending mutation:', error);
@@ -147,6 +182,7 @@ class ShareContainer extends Component {
     };
 
     render() {
+        const { user } = this.props.data;
         return (
             <Share
                 handleImageSelect={this.handleImageSelect}
@@ -160,6 +196,7 @@ class ShareContainer extends Component {
                 tagsList={this.props.tagsList}
                 tagsSelected={this.props.tagsSelected}
                 currentState={this.state}
+                currentUser={user}
             />
         );
     }
@@ -167,16 +204,19 @@ class ShareContainer extends Component {
 
 const mapStateToProps = state => ({
     isLoading: state.items.isLoading,
-    // items: state.items.items,
-    // filterValue: state.filter.filterValue,
     tagsList: state.filter.tagsList,
     tagsSelected: state.filter.tagsSelected,
-    // error: state.items.error,
 });
 
 export default compose(
     withApollo,
     graphql(SubmitNewItem),
+    graphql(fetchItems),
+    graphql(fetchUser, {
+        options: ({ match }) => ({
+            variables: { id: firebaseAuth.currentUser.uid },
+        }),
+    }),
     connect(mapStateToProps),
 )(ShareContainer);
 

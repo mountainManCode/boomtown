@@ -39,6 +39,7 @@ const fetchUser = gql`
                     id
                     email
                     fullname
+                    imageurl
                 }
                 borrower {
                     id

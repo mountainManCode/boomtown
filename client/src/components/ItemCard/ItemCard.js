@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
+
+import Avatar from 'material-ui/Avatar';
 import {
     Card,
     CardActions,
@@ -9,7 +11,6 @@ import {
     CardText,
 } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
-import Gravatar from 'react-gravatar';
 import moment from 'moment';
 
 import PropTypes from 'prop-types';
@@ -40,7 +41,7 @@ const ItemCard = ({ item }) => (
                 <CardHeader
                     title={item.itemowner.fullname}
                     subtitle={moment(item.created).fromNow()}
-                    avatar={<Gravatar email={item.itemowner.email} />}
+                    avatar={<Avatar src={item.itemowner.imageurl} size={50} />}
                 />
             </Link>
             <CardTitle
