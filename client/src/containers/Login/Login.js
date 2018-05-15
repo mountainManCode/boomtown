@@ -5,6 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 
 import ValidatedTextField from '../../components/ValidatedTextField';
+import SignUpContainer from '../SignUp/SignUpContainer';
 
 import './styles.css';
 import logo from '../../images/boomtown-logo.svg';
@@ -13,8 +14,8 @@ import topRight from '../../images/home-tr.svg';
 
 const Login = ({
     login,
-    handleUpdateEmail,
-    handleUpdatePassword,
+    handleEmail,
+    handlePassword,
     emailInputValue,
     passwordInputValue,
     loginError,
@@ -44,7 +45,7 @@ const Login = ({
                                 label="Email"
                                 value={emailInputValue}
                                 type="email"
-                                handleChange={handleUpdateEmail}
+                                handleChange={handleEmail}
                             />
                         </div>
                         <div>
@@ -52,7 +53,7 @@ const Login = ({
                                 label="Password"
                                 value={passwordInputValue}
                                 type="password"
-                                handleChange={handleUpdatePassword}
+                                handleChange={handlePassword}
                             />
                         </div>
                         <RaisedButton
@@ -66,6 +67,7 @@ const Login = ({
                     </form>
                     <div>{loginError.message}</div>
                 </div>
+                <SignUpContainer />
             </Paper>
         </div>
     </div>
