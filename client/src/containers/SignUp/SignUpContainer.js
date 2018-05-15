@@ -42,7 +42,6 @@ class SignUpContainer extends Component {
                 .catch(error => {
                     const errorMessage = error.message;
                     this.setState({ signUpError: errorMessage });
-                    console.log(errorMessage);
                 });
         }
     };

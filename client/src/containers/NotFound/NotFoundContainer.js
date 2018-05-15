@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import NotFound from './NotFound';
 
-export default class NotFoundContainer extends Component {
-  render() {
-    return <NotFound />;
-  }
+class NotFoundContainer extends Component {
+    constructor() {
+        super();
+        this.state = {};
+    }
+    render() {
+        return <NotFound />;
+    }
 }
+
+export default NotFoundContainer;

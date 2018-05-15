@@ -5,6 +5,7 @@ module.exports = ({
     getItem,
     getItems,
     getShareditems,
+    createNewUserAuth,
     createNewItem
   },
   firebaseResource: { getUser, getUsers }
@@ -28,10 +29,14 @@ module.exports = ({
       }
     },
     Mutation: {
+      createNewUserAuth(root, { newUser }) {
+        console.log(newUser);
+        return createNewUserAuth(newUser);
+      },
       createNewItem(root, { newItem }) {
-        console.log(newItem);
         return createNewItem(newItem);
       }
+
       // updateItem(root, { newItem: { id, borrower: { fullname, email } } }) {
       //   return updateItem(id, borrower);
       // { fullname, email };

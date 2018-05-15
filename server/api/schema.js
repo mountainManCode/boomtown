@@ -31,6 +31,11 @@ type Tag {
     id: ID
   }
 
+  input AddUserAuthInput {
+    email: String
+    password: String
+  }
+
   input AddItemInput {
     title: String
     description: String
@@ -47,6 +52,7 @@ type Tag {
   }
 
   type Mutation {
+    createNewUserAuth(newUser: AddUserAuthInput): User
     createNewItem(newItem: AddItemInput): Item
     updateItem(currentItem: UpdateItemInput): Item 
   }

@@ -16,9 +16,6 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 // import Styles from "./styles.js";
 
-// import Items from "../../components/ItemCard/ItemCard";
-// import FlatButton from "material-ui/FlatButton";
-
 const ItemCard = ({ item }) => (
     <div className="itemCardContainer">
         <Card>

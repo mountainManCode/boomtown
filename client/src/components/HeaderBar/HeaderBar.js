@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import MenuItem from 'material-ui/MenuItem';
 // import Checkbox from "material-ui/Checkbox";
@@ -61,4 +61,4 @@ const mapStateToProps = state => ({
     tagsList: state.filter.tagsList,
 });
 
-export default connect(mapStateToProps)(HeaderBar);
+export default withRouter(connect(mapStateToProps)(HeaderBar));

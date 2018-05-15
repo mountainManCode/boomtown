@@ -28,10 +28,7 @@ class SignUp extends Component {
 
     render() {
         const {
-            // open,
             currentState,
-            // handleClose,
-            // handleOpen,
             signUpEmail,
             signUpPassword,
             signUpConfirm,
