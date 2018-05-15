@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 
 import Items from './Items';
 import HeaderBar from '../../components/HeaderBar/HeaderBar';
+import AddItemButton from '../../components/AddItemButton/';
+import Styles from './styles';
 // import Loader from "../../components/Loader";
 
 class ItemsContainer extends Component {
@@ -30,9 +32,13 @@ class ItemsContainer extends Component {
             );
         }
         return (
-            <Items
-                list={this.props.tagsSelected.length === 0 ? items : filtered}
-            />
+            <section style={Styles.itemsContainer}>
+                <Items
+                    list={
+                        this.props.tagsSelected.length === 0 ? items : filtered
+                    }
+                />
+            </section>
         );
     }
 }

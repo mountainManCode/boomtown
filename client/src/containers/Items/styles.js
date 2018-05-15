@@ -6,6 +6,7 @@ const Styles = {
 
     itemsList: {
         margin: '0 auto',
+        padding: '0 5vw',
         isFitWidth: 'true',
     },
 

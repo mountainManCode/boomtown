@@ -7,11 +7,14 @@ import Masonry from 'react-masonry-component';
 import PropTypes from 'prop-types';
 // import ProfileCard from '../../components/ProfileCard/ProfileCard';
 import ItemCard from '../../components/ItemCard/ItemCard';
+import AddItemButton from '../../components/AddItemButton/';
 
 import './style.css';
 
 const Profile = ({ items, user }) => (
     <section className={'profile-container'}>
+        <AddItemButton />
+
         <Card style={{ maxWidth: '800px', margin: '0 auto' }}>
             <div className="profile-header">
                 <div className="user-info">

@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 // import FlatButton from "material-ui/FlatButton";
 
 const ItemCard = ({ item }) => (
-    <div className="itemsContainer">
+    <div className="itemCardContainer">
         <Card>
             {item.borrower ? (
                 <CardMedia
