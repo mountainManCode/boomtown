@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import { graphql, compose, Mutation, withApollo } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
 
-import { FirebaseStorage, firebaseAuth } from '../../config/firebase';
-import { setFilterValue, resetTags } from '../../redux/modules/filter';
-import Placeholder from '../../images/item-placeholder.jpg';
+import { firebaseAuth } from '../../config/firebase';
+import { resetTags } from '../../redux/modules/filter';
+
+import ItemPlaceholderImage from '../../images/ItemPlaceholderImage.jpg';
 import Share from './Share';
-import TagSelectFilter from '../../components/TagSelectFilter/TagSelectFilter';
+// import TagSelectFilter from '../../components/TagSelectFilter/TagSelectFilter';
 import './style.css';
 
+// GRAPHQL QUERIES / MUTATION
 const SubmitNewItem = gql`
     mutation addNewItem(
         $title: String
@@ -60,48 +62,23 @@ const fetchItems = gql`
 `;
 
 const fetchUser = gql`
-    query getUser($id: ID) {
+    query fetchUser($id: ID) {
         user(id: $id) {
-            id
-            email
             fullname
-            bio
             imageurl
-            shareditems {
-                id
-                title
-                created
-                itemowner {
-                    id
-                    email
-                    fullname
-                }
-                borrower {
-                    id
-                    fullname
-                }
-                imageurl
-                description
-                available
-                tags {
-                    id
-                    title
-                }
-            }
         }
     }
 `;
-
 class ShareContainer extends Component {
     state = {
         finished: false,
         stepIndex: 0,
-        title: 'Awesome Item!',
-        description: 'Some Cool Stuff!',
+        title: 'One Rad Item',
+        description: 'Too cool for school!',
         created: Date.now(),
-        imageurl: '',
-        itemowner: 'ol1hO7xyPUM7JChl5vJYswhwqZw2',
-        tags: [],
+        imageurl: ItemPlaceholderImage,
+        itemowner: firebaseAuth.currentUser.uid,
+        tags: this.props.tagsSelected,
     };
 
     handleNext = () => {
@@ -172,18 +149,21 @@ class ShareContainer extends Component {
                     itemowner: uid,
                     tags: this.props.tagsSelected.map(tag => ({ id: tag })),
                 },
-                refetchQueries: [{ query: fetchItems, fetchUser }],
+                refetchQueries: [{ query: fetchItems }],
             });
         } catch (error) {
             console.log('Error sending mutation:', error);
         }
         this.props.dispatch(resetTags());
-        // this.props.history.push('/');
+        this.props.history.push('/');
     };
 
     render() {
-        const { user } = this.props.data;
-        return (
+        const { user, loading } = this.props.fetchUser;
+
+        return loading ? (
+            <p>loading ...</p>
+        ) : (
             <Share
                 handleImageSelect={this.handleImageSelect}
                 handleImageUpload={this.handleImageUpload}
@@ -196,7 +176,7 @@ class ShareContainer extends Component {
                 tagsList={this.props.tagsList}
                 tagsSelected={this.props.tagsSelected}
                 currentState={this.state}
-                currentUser={user}
+                user={user}
             />
         );
     }
@@ -209,15 +189,15 @@ const mapStateToProps = state => ({
 });
 
 export default compose(
-    withApollo,
-    graphql(SubmitNewItem),
-    graphql(fetchItems),
     graphql(fetchUser, {
-        options: ({ match }) => ({
-            variables: { id: firebaseAuth.currentUser.uid },
+        name: 'fetchUser',
+        options: () => ({
+            variables: {
+                id: firebaseAuth.currentUser.uid,
+            },
         }),
     }),
+    graphql(SubmitNewItem),
+    graphql(fetchItems),
     connect(mapStateToProps),
 )(ShareContainer);
-
-// export default ShareContainer;

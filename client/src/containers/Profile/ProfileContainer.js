@@ -13,7 +13,6 @@ class ProfileContainer extends Component {
     };
 
     render() {
-        // if (this.props.isLoading) return <Loader />;
         const { loading, user } = this.props.data;
         return loading ? (
             <p>loading ...</p>

@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import ValidatedTextField from '../../components/ValidatedTextField';
 
 // import './styles.css';
-import logo from '../../images/boomtown-logo.svg';
-import bottomLeft from '../../images/home-bl.svg';
-import topRight from '../../images/home-tr.svg';
 
 class SignUp extends Component {
     state = {

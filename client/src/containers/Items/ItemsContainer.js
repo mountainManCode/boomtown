@@ -81,7 +81,7 @@ const fetchItems = gql`
 
 const mapStateToProps = state => ({
     isLoading: state.items.isLoading,
-    tagsList: state.filter.tagsList,
+    // tagsList: state.filter.tagsList,
     tagsSelected: state.filter.tagsSelected,
 });
 

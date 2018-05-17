@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { graphql, compose, withApollo } from 'react-apollo';
-import gql from 'graphql-tag';
-import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+// import firebase from 'firebase';
+// import { graphql, compose, withApollo } from 'react-apollo';
+// import gql from 'graphql-tag';
+// import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
 
-import Moment from 'moment';
-import Gravatar from 'react-gravatar';
+import moment from 'moment';
+import Avatar from 'material-ui/Avatar';
 import {
     Card,
     CardHeader,
@@ -16,14 +18,12 @@ import {
 import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+// import SelectField from 'material-ui/SelectField';
+// import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
-import firebase from 'firebase';
-import { setFilterValue } from '../../redux/modules/filter';
-import { FirebaseStorage, FirebaseAuth } from '../../config/firebase';
+// import { setFilterValue } from '../../redux/modules/filter';
+// import { FirebaseStorage, FirebaseAuth } from '../../config/firebase';
 
-import Placeholder from '../../images/item-placeholder.jpg';
 import TagSelectFilter from '../../components/TagSelectFilter/TagSelectFilter';
 import './style.css';
 
@@ -87,34 +87,35 @@ class Share extends Component {
             handleItemTitle,
             handleSelectFilter,
             handleSubmit,
-            currentUser,
+            user,
+            currentState,
+            tagsSelected,
         } = this.props;
 
+        // PREVIEW OF ITEM CARD
         return (
             <div className="share-container">
                 <section className="share-preview-card">
-                    <Card style={{}} className="card">
-                        <CardMedia className="card-media">
-                            <img
-                                src={imageurl || Placeholder}
-                                alt="Image of new item"
-                            />
+                    <Card>
+                        <CardMedia>
+                            <img src={imageurl} alt={currentState.title} />
                         </CardMedia>
-
-                        <CardHeader
-                            title="Bart Simpson"
-                            subtitle={Moment().fromNow()}
-                            avatar={
-                                <Gravatar
-                                    className="photo"
-                                    email="{firebaseAuth.currentUser && firebaseAuth.currentUser.email}"
-                                />
-                            }
+                        <Link to={`profile/${currentState.itemowner}`}>
+                            <CardHeader
+                                title={user.fullname}
+                                subtitle={moment(
+                                    currentState.created,
+                                ).fromNow()}
+                                avatar={
+                                    <Avatar src={user.imageurl} size={50} />
+                                }
+                            />
+                        </Link>
+                        <CardTitle
+                            title={currentState.title}
+                            subtitle={tags.map(tag => tag.title).join(', ')}
                         />
-
-                        <CardTitle title={title} />
-
-                        <CardText>{description}</CardText>
+                        <CardText>{currentState.description}</CardText>
                     </Card>
                 </section>
 

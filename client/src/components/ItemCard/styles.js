@@ -9,9 +9,6 @@ const Styles = {
     itemsCard: {
         flex: 'row',
     },
-    // Card: {
-    //   width: "100%"
-    // }
 };
 
 export default Styles;
