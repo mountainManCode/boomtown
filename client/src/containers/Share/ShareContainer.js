@@ -9,7 +9,6 @@ import { resetTags } from '../../redux/modules/filter';
 
 import ItemPlaceholderImage from '../../images/ItemPlaceholderImage.jpg';
 import Share from './Share';
-// import TagSelectFilter from '../../components/TagSelectFilter/TagSelectFilter';
 import './style.css';
 
 // GRAPHQL QUERIES / MUTATION

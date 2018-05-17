@@ -6,11 +6,12 @@ import Paper from 'material-ui/Paper';
 
 import ValidatedTextField from '../../components/ValidatedTextField';
 import SignUpContainer from '../SignUp/SignUpContainer';
+import About from '../../components/About/About';
 
-import './styles.css';
 import logo from '../../images/boomtown-logo.svg';
 import bottomLeft from '../../images/home-bl.svg';
 import topRight from '../../images/home-tr.svg';
+import './styles.css';
 
 const Login = ({
     login,
@@ -20,7 +21,7 @@ const Login = ({
     passwordInputValue,
     loginError,
 }) => (
-    <div className="page login">
+    <div className="page">
         <div className="logo">
             <img src={logo} alt="Boomtown Logo" />
         </div>
@@ -67,7 +68,10 @@ const Login = ({
                     </form>
                     <div>{loginError.message}</div>
                 </div>
-                <SignUpContainer />
+                <div className="dialogueContainer">
+                    <About />
+                    <SignUpContainer />
+                </div>
             </Paper>
         </div>
     </div>

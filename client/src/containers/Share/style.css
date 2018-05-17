@@ -1,6 +1,6 @@
 .share-container {
   display: flex;
-  flex-flow: column;
+  flex-flow: column nowrap;
   color: #fff;
   min-height: 100%;
   width: 100%;
