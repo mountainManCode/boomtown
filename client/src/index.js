@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import injectTapEventPlugin from 'react-tap-event-plugin';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
 import { Provider } from 'react-redux';
@@ -11,13 +10,11 @@ import store from './redux/store';
 import client from './config/apolloClient';
 import { updateAuthState, userLoading } from './redux/modules/auth';
 import { firebaseAuth } from './config/firebase';
-
 import muiTheme from './config/theme';
 
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import Layout from './components/Layout';
 import Login from './containers/Login';
-// import HeaderBar from './components/HeaderBar/HeaderBar';
 import Items from './containers/Items';
 import Profile from './containers/Profile';
 import Share from './containers/Share';
@@ -44,9 +41,8 @@ firebaseAuth.onAuthStateChanged(user => {
 
 const Boomtown = () => (
     <MuiThemeProvider muiTheme={muiTheme}>
-        <ApolloProvider client={client}>
-            <Provider store={store}>
-                {/* <ConnectedRouter history={history}> */}
+        <Provider store={store}>
+            <ApolloProvider client={client}>
                 <Router>
                     <div>
                         <Layout>
@@ -78,9 +74,8 @@ const Boomtown = () => (
                         </Layout>
                     </div>
                 </Router>
-                {/* </ConnectedRouter> */}
-            </Provider>
-        </ApolloProvider>
+            </ApolloProvider>
+        </Provider>
     </MuiThemeProvider>
 );
 
