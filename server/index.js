@@ -21,6 +21,8 @@ const firebaseResource = require('./api/resources/firebaseResource')(app);
 // postgresResource returns a promise so the start app gets called once the database is connected and postgresResource returns
 postgresResource(app).then(postgresResource => start(postgresResource));
 
+app.use('*', cors());
+
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.resolve(__dirname, 'public')));
 }
@@ -33,8 +35,6 @@ const start = postgresResource => {
       firebaseResource
     })
   });
-
-  app.use('*', cors());
 
   // Where we will send all of our GraphQL requests
   app.use(
