@@ -1,12 +1,12 @@
-const firebase = require("firebase");
+const firebase = require('firebase');
 
 module.exports = app => {
-  const firebaseApp = firebase.initializeApp(app.get("FIREBASE_CONFIG"));
+  const firebaseApp = firebase.initializeApp(app.get('FIREBASE_CONFIG'));
   const db = firebaseApp.database();
 
   return {
     async getUsers() {
-      let users = await db.ref("users").once("value");
+      let users = await db.ref('users').once('value');
       users = users.val();
       let userList = [];
       for (userid in users) {
@@ -18,12 +18,11 @@ module.exports = app => {
           imageurl: users[userid].imageurl
         });
       }
-      console.log(userList);
-      console.log(users);
+
       return userList;
     },
     async getUser(userid) {
-      let user = await db.ref(`/users/${userid}`).once("value");
+      let user = await db.ref(`/users/${userid}`).once('value');
       user = user.val();
       return {
         id: userid,

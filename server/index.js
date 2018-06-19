@@ -1,7 +1,8 @@
 const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-// const path = require('path');
+const path = require('path');
 
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
@@ -11,7 +12,7 @@ const initLoaders = require('./api/loaders');
 const initResolvers = require('./api/resolvers');
 const typeDefs = require('./api/schema');
 
-const app = express();
+
 config(app);
 
 // the config file is passed throught the app
@@ -21,9 +22,9 @@ const firebaseResource = require('./api/resources/firebaseResource')(app);
 // postgresResource returns a promise so the start app gets called once the database is connected and postgresResource returns
 postgresResource(app).then(postgresResource => start(postgresResource));
 
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static(path.resolve(__dirname, 'public')));
-// }
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.resolve(__dirname, 'public')));
+}
 
 const start = postgresResource => {
   const schema = makeExecutableSchema({

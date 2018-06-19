@@ -5,7 +5,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 const gqlServer =
     process.env.NODE_ENV === 'production'
         ? `https://${window.location.host}`
-        : 'http://localhost:3001';
+        : 'http://localhost:5000';
 
 const client = new ApolloClient({
     link: new HttpLink({
