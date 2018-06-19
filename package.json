@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV='production' node server/index.js",
-    "start:dev":
-      "NODE_ENV='development' concurrently 'node server/index.js' 'cd client && npm run start'",
+    "start:dev": "NODE_ENV='development' node server/index.js",
     "build:react": "cd client && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
