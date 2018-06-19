@@ -12,7 +12,6 @@ const initLoaders = require('./api/loaders');
 const initResolvers = require('./api/resolvers');
 const typeDefs = require('./api/schema');
 
-
 config(app);
 
 // the config file is passed throught the app
@@ -59,9 +58,10 @@ const start = postgresResource => {
       endpointURL: '/graphql'
     })
   );
-  app.listen(app.get('PORT'), () =>
+  app.listen(app.get('PORT'), () => {
+    console.log(app.get('PORT'));
     console.log(
       `GraphQL is now running on http://localhost:${app.get('PORT')}/graphql`
-    )
-  );
+    );
+  });
 };
