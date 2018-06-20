@@ -2,7 +2,7 @@
 
 An application to share your goods and items with the community. Built with React, Express, GraphQL and Redux.
 
-login: bart@simpsons.com password: password
+login: homer@simpsons.com password: password
 
 <img src="./boomtown-1.png" width="600" height="300">
 
@@ -11,6 +11,10 @@ login: bart@simpsons.com password: password
 ## Installation
 
 Download the repo, then run:
+
+```bash - in the root directory
+npm install
+```
 
 ```bash
 cd client && npm install
@@ -24,10 +28,10 @@ From inside the `client` directory, run:
 npm start
 ```
 
-From inside the `server` directory, run:
+From the 'root' directory start the server, run:
 
 ```bash
-npm start
+npm run dev:start
 ```
 
 ## Technology Used
@@ -52,5 +56,5 @@ npm start
 
 ## Acknowledgement
 * Thanks to the Red instructor team for providing the materials and skills to make this site happen.
-* Thanks to my cohort for their support.
+* Thanks to my cohort for bouncing ideas off eachother to complete the project.
 

@@ -44,17 +44,17 @@ class LoginContainer extends Component {
             from: { pathname: '/' },
         };
         return !this.props.authenticated ? (
-            <div>
-                <Login
-                    login={this.login}
-                    emailInputValue={this.state.emailInputValue}
-                    passwordInputValue={this.state.passwordInputValue}
-                    handleEmail={this.handleEmail}
-                    handlePassword={this.handlePassword}
-                    loginError={this.state.loginError}
-                />
-            </div>
+            // <div>
+            <Login
+                login={this.login}
+                emailInputValue={this.state.emailInputValue}
+                passwordInputValue={this.state.passwordInputValue}
+                handleEmail={this.handleEmail}
+                handlePassword={this.handlePassword}
+                loginError={this.state.loginError}
+            />
         ) : (
+            // </div>
             <Redirect to={from} />
         );
     }
